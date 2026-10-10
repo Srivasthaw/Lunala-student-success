@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lunala | Student Success Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f5f6fb;--card:#fff;--text:#161a33;--mut:#6b7390;--acc:#6c4cf1;--acc2:#18b6c9;--ok:#1fa971;--warn:#f0a202;--bad:#e5384f;--bd:#e4e7f2;--chip:#f0f2fa;--sh:0 6px 24px rgba(40,40,100,.07);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0e1d;--card:#141832;--text:#eceefb;--mut:#9aa3c4;--acc:#8b73ff;--acc2:#35d0e0;--ok:#3ed598;--warn:#f5b83d;--bad:#ff6178;--bd:#252b4d;--chip:#1c2142;--sh:none}}
+:root[data-theme="dark"]{--bg:#0b0e1d;--card:#141832;--text:#eceefb;--mut:#9aa3c4;--acc:#8b73ff;--acc2:#35d0e0;--ok:#3ed598;--warn:#f5b83d;--bad:#ff6178;--bd:#252b4d;--chip:#1c2142;--sh:none}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+h1,h2,.brand b{font-family:Poppins,Inter,system-ui,sans-serif}
+main{max-width:1120px;margin:0 auto;padding:16px 18px 40px}h2{font-size:16px;margin:0 0 8px}
+.mut{color:var(--mut)}.hide{display:none!important}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-top:14px;box-shadow:var(--sh)}
+.top{display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5}
+.top .sp{flex:1}.brand{display:flex;align-items:center;gap:10px}.brand b{font-size:18px}
+.pill{background:var(--chip);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:600;text-transform:capitalize;color:var(--acc)}
+.btn{border:1px solid var(--bd);background:var(--card);color:var(--text);padding:8px 15px;border-radius:999px;cursor:pointer;font:inherit}.btn:hover{border-color:var(--acc)}
+.btn.p{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff;font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.kpi div{background:var(--chip);border-radius:12px;padding:10px 14px}.kpi b{font-size:24px;display:block;font-family:Poppins,Inter,sans-serif}
+.sl{display:grid;grid-template-columns:125px 1fr 40px;gap:8px;align-items:center;margin:4px 0}input[type=range]{width:100%;accent-color:var(--acc)}
+select,input[type=number],input[type=text],input[type=password],input:not([type]),textarea{background:var(--chip);color:var(--text);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;font:inherit;max-width:100%}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-top:14px;padding-bottom:2px}.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--text);padding:8px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;font:inherit}.tabs button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff;font-weight:600}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top}th{color:var(--mut);font-weight:600;position:sticky;top:0;background:var(--card)}
+.tag{padding:2px 10px;border-radius:999px;color:#fff;font-size:12px;font-weight:600}.High{background:var(--bad)}.Medium{background:var(--warn);color:#222}.Low{background:var(--ok)}.Urgent{background:#7a0019}.Watch{background:var(--warn);color:#222}
+.cv{position:relative;height:280px}.tip{background:var(--chip);border-left:4px solid var(--acc);border-radius:10px;padding:10px 14px;margin-top:10px}
+li{margin:5px 0}details{margin-top:10px}summary{cursor:pointer;color:var(--acc);font-weight:600}code{background:var(--chip);padding:1px 6px;border-radius:6px}
+.drop{border:2px dashed var(--bd);border-radius:14px;padding:22px;text-align:center;cursor:pointer;background:var(--chip)}.drop.on{border-color:var(--acc)}
+.bar{height:8px;background:var(--chip);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+.av{display:inline-flex;flex:none}.chat{height:380px;overflow-y:auto;padding:6px 2px;display:flex;flex-direction:column;gap:10px}
+.mb{display:flex;gap:8px;align-items:flex-end}.mb.u{justify-content:flex-end}.bb{max-width:78%;padding:10px 14px;border-radius:16px;background:var(--chip)}.mb.u .bb{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{border:1px solid var(--acc);color:var(--acc);background:transparent;border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit}.chip:hover{background:var(--acc);color:#fff}
+.lhead{display:flex;gap:10px;align-items:center;margin-bottom:8px}.lin{margin-top:10px;flex-wrap:nowrap}.lin input{flex:1}
+#lfab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:8px;padding:8px 18px 8px 10px;border-radius:999px;border:0;color:#fff;font:600 14px Inter,sans-serif;background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 8px 24px rgba(108,76,241,.45);cursor:pointer;z-index:8}
+#lpop{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:380px;max-width:calc(100vw - 24px);height:min(560px,calc(100vh - 120px));background:var(--card);border:1px solid var(--bd);border-radius:18px;box-shadow:0 18px 50px rgba(30,20,90,.35);display:flex;flex-direction:column;padding:12px;z-index:7}
+#lpop .chat{flex:1;height:auto;min-height:0;margin-top:8px}#lpop .chips{max-height:120px;overflow-y:auto}.ph{display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--bd)}.x{background:none;border:0;color:var(--mut);font-size:26px;cursor:pointer;line-height:1}
+.foot{text-align:center;color:var(--mut);font-size:12px;padding:10px 18px 30px}
+#login{display:grid;grid-template-columns:1.1fr .9fr;min-height:100vh}
+.lhero{background:linear-gradient(135deg,#241a75,#6c4cf1 58%,#18b6c9);color:#fff;padding:48px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.cheer{display:inline-block;margin:0 0 16px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:600}.lhero h1{font-size:38px;line-height:1.15;margin:18px 0 12px}.lhero p{max-width:480px;opacity:.9}.lhero ul{padding-left:18px;opacity:.95}.art{position:absolute;right:-60px;top:-40px;width:420px;opacity:.85;pointer-events:none}
+.lform{display:grid;place-items:center;padding:24px}.lform .card{width:100%;max-width:400px;margin:0}
+.lform label{display:block;margin:10px 0 4px;color:var(--mut);font-size:12px}.lform input{width:100%}
+body.r-student #tune,body.r-student #fr,body.r-student #kpi,body.r-student #lbrief,body.r-student #dh{display:none!important}
+body.r-student #dcard{background:none;border:0;box-shadow:none;padding:0;margin-top:0}
+body.r-student main{padding-bottom:96px}
+body.r-student #tabs{position:fixed;left:0;right:0;bottom:0;margin:0;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--bd);justify-content:space-around;z-index:6}
+body.r-student #tabs button{font-size:13px;flex:1;border:0;background:none;border-radius:12px;padding:10px 4px;font-weight:600;color:var(--mut)}
+body.r-student #tabs button.on{background:var(--chip);color:var(--acc)}
+body.r-student #lfab{bottom:calc(76px + env(safe-area-inset-bottom,0px))}body.r-student #lpop{bottom:calc(142px + env(safe-area-inset-bottom,0px));height:min(520px,calc(100vh - 190px))}
+.me{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:12px}.me .card{margin-top:0}
+.bigm{font:700 36px Poppins,Inter,sans-serif}.meter{position:relative;height:10px;border-radius:6px;background:var(--chip)}.meter i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--acc),var(--acc2))}.meter u{position:absolute;top:-4px;width:2px;height:18px;background:var(--text);opacity:.45}
+.up{color:var(--ok);font-weight:600}.dn{color:var(--warn);font-weight:600}.badge{display:inline-flex;gap:6px;background:var(--chip);border-radius:999px;padding:5px 12px;margin:3px}
+.ev{gap:6px;display:flex;flex-direction:column}.ev h3{margin:0;font:600 16px Poppins,Inter,sans-serif}.evt{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 10px;border-radius:999px;background:var(--chip);color:var(--acc);align-self:flex-start}.evt.Hackathon{background:var(--acc);color:#fff}.evt.Placement{background:var(--ok);color:#fff}.soon{color:var(--warn);font-weight:600}.chip.on{background:var(--acc);color:#fff}
+.upd{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd)}.upd:last-child{border:0}.dot{width:8px;height:8px;border-radius:50%;background:var(--acc);margin-top:7px;flex:none}
+body:not(.r-admin) #alr,body:not(.r-admin) #alrl{display:none}
+@media(max-width:600px){#lfab span{display:none}#lfab{padding:10px}.top>.mut,#who{display:none}.top{gap:8px;padding:10px 12px}}
+@media(max-width:800px){#login{grid-template-columns:1fr}.lhero{padding:28px}.lhero h1{font-size:28px}.art{width:260px}}
+</style>
+</head>
+<body>
+<div id="login"><div class="lhero"><svg class="art" viewBox="0 0 400 400"><defs><mask id="mk"><rect width="400" height="400" fill="#fff"/><circle cx="300" cy="130" r="66" fill="#000"/></mask></defs><circle cx="262" cy="150" r="72" fill="#fff" mask="url(#mk)"/><g fill="#fff"><circle cx="330" cy="60" r="3"/><circle cx="140" cy="90" r="2"/><circle cx="360" cy="230" r="2.5"/><circle cx="90" cy="200" r="2"/><circle cx="200" cy="40" r="2"/></g></svg>
+<div class="brand"><span class="logo" data-s="44"></span><b style="font-size:26px">Lunala</b></div><h1>Every student seen,<br>every step celebrated.</h1><div class="cheer" id="lcheer"></div>
+<p>An early-support copilot that combines academics, attendance, LMS activity, wellbeing check-ins and behaviour trends, so faculty and counsellors can reach out early and kindly.</p>
+<ul><li>Explainable Student Success Score</li><li>Wellbeing check-ins with reliability and change tracking</li><li>Early alerts with a human always in the loop</li><li>Privacy by design: data stays in your browser</li></ul></div>
+<div class="lform"><div class="card"><h2>Sign in</h2><div class="row" id="lroles"></div><label>Username or student ID</label><input id="lu" autocomplete="off"><label>Password or PIN</label><input id="lp" type="password"><div id="lerr" style="color:var(--bad);min-height:20px;margin-top:6px"></div><button class="btn p" id="lgo" style="width:100%">Sign in</button>
+<div class="tip" style="font-size:12px"><b>Demo accounts</b> (tap a role above to fill them in):<br>Student S1010 / 1234 · faculty / faculty123 · counsellor / care123 · admin / admin123<br>This demo sign-in runs in your browser. A real deployment needs server-side authentication.</div></div></div></div>
+<div id="shell" class="hide">
+<header class="top"><div class="brand"><span class="logo" data-s="34"></span><b>Lunala</b></div><span class="mut">Student Success Platform</span><span class="sp"></span><span id="who" class="mut"></span><span class="pill" id="rolep"></span><button class="btn" id="out">Sign out</button></header>
+<main>
+<div class="card hide" id="dsetup">
+<h2>Load your own data (admin)</h2>
+<div class="drop" id="drop">Drop CSV files here, or click to choose them<br><span class="mut">Each file needs a <code>student_id</code> column. Add as many files as you have (academic, attendance, LMS...).</span></div>
+<input type="file" id="fi" accept=".csv" multiple class="hide">
+<div class="row" style="margin-top:10px"><button class="btn p" id="samp">Try with sample data (500 students)</button><button class="btn" id="dls">Download sample CSVs</button><span class="mut" id="fl"></span></div>
+<details><summary>Which columns can I use?</summary>
+<ul class="mut"><li><b>Academic:</b> <code>cgpa</code>, <code>backlogs</code>, plus optional <code>name</code>, <code>department</code>, <code>semester</code></li>
+<li><b>Attendance:</b> <code>overall_pct</code></li><li><b>LMS:</b> <code>logins_per_week</code>, <code>assignment_completion_pct</code></li>
+<li><b>Engagement:</b> <code>events</code>, <code>clubs</code>, <code>hackathons</code>, <code>certifications</code></li>
+<li><b>Placement:</b> <code>aptitude</code>, <code>coding</code>, <code>mock_interview</code>, <code>technical_skill</code> (Beginner/Intermediate/Advanced), <code>soft_skill_score</code></li>
+<li><b>Psychometrics (0-100 scales):</b> <code>conscientiousness</code>, <code>openness</code>, <code>extraversion</code>, <code>agreeableness</code>, <code>emotional_stability</code>, <code>grit</code>, <code>motivation</code>, <code>stress_level</code></li>
+<li><b>Survey file</b> (needs a <code>wave</code> column): <code>student_id, wave, seconds, w1-w5, p1-p4, u1-u3, q1-q2, g1-g2, b1-b3, e1-e3, s1-s2, sh, ref</code>. <b>Weekly file</b> (needs a <code>week</code> column): <code>student_id, week, attendance_pct, logins</code></li>
+<li><b>Events file</b> (needs <code>title</code> and <code>host</code> columns): <code>title, type, host, date (YYYY-MM-DD), mode, location, deadline, link, skills (a;b), team_size, prize, description</code></li>
+<li><b>Faculty availability file</b> (needs <code>faculty</code>, <code>start</code>, <code>end</code>): <code>faculty, department, role, room, day (Mon-Sat), start (HH:MM), end (HH:MM)</code>, one row per free slot</li>
+<li><b>Feedback:</b> <code>satisfaction</code>, <code>faculty_feedback</code> (1 to 5)</li></ul>
+<div class="mut">Any column you don't have is skipped and the remaining weights are rescaled. Files can be split any way you like; they are joined on <code>student_id</code>.</div></details>
+</div>
+
+<div id="app" class="hide">
+<div id="lbrief" class="card hide"></div>
+<div class="card" id="tune"><h2>Score settings (weights and risk cut-offs)</h2>
+<div class="grid"><div id="ws"></div><div><div class="row"><label>High risk below</label><input type="number" id="th1" value="50" style="width:70px"><label>Medium below</label><input type="number" id="th2" value="70" style="width:70px"></div>
+<div class="tip">Weights are rescaled to 100%. Change them and everything below updates instantly.</div></div></div></div>
+
+<div class="card" id="dcard"><h2 id="dh">Dashboard</h2>
+<div class="row" id="fr"><label>Department</label><select id="fd"></select><label>Risk band</label><select id="fb"><option>All</option><option>High</option><option>Medium</option><option>Low</option></select><button class="btn" id="dl">Download results (CSV)</button></div>
+<div class="kpi" id="kpi" style="margin-top:12px"></div>
+<div class="tabs" id="tabs"></div>
+
+<section id="p-over"><div class="grid" style="margin-top:12px"><div class="cv"><canvas id="c1"></canvas></div><div class="cv"><canvas id="c2"></canvas></div><div class="cv"><canvas id="c3"></canvas></div><div class="cv"><canvas id="c4"></canvas></div></div></section>
+<section id="p-risk" class="hide"><p class="mut">Students with a risk flag or High band, lowest score first (top 150 shown; download for all).</p><div class="tw" style="max-height:480px"><table id="tr"></table></div></section>
+<section id="p-stu" class="hide"><div class="row" style="margin-top:12px"><label>Student</label><select id="ss"></select></div><div id="sd"></div><div class="cv" style="height:300px"><canvas id="c5"></canvas></div></section>
+<section id="p-seg" class="hide"><div class="tw" style="margin-top:12px"><table id="tg"></table></div></section>
+<section id="p-psy" class="hide"><div class="tip">Psychometric scores are self-reported and should only guide supportive conversations (counselling, mentoring). Never use them to label, rank, or exclude a student. Collect them only with consent.</div><div class="grid" style="margin-top:12px"><div class="cv"><canvas id="c6"></canvas></div><div class="cv"><canvas id="c7"></canvas></div></div><div class="mut" id="pn"></div></section>
+<section id="p-fb" class="hide"><div id="fbb"></div></section>
+<section id="p-fbi" class="hide"><div id="fbi"></div></section>
+<section id="p-opp" class="hide"><div id="oppb"></div></section>
+<section id="p-me" class="hide"><div id="meb"></div></section>
+<section id="p-sv" class="hide"><div id="svb" style="margin-top:12px"></div></section>
+<section id="p-al" class="hide"><div class="row" style="margin-top:12px"><label id="alrl">View as</label><select id="alr"><option>Faculty</option><option>Counsellor</option></select><label>Counsellor capacity per week</label><input type="number" id="cap" value="15" style="width:70px"><button class="btn" id="dla">Download alerts (CSV)</button><span class="mut">Admin preview. Faculty see summaries only; counsellors see full detail.</span></div><div class="kpi" id="alk" style="margin-top:12px"></div><div class="tw" style="max-height:380px;margin-top:12px"><table id="alt"></table></div><div id="ald" style="margin-top:12px"></div></section>
+<section id="p-qa" class="hide"><div class="tw" style="margin-top:12px"><table id="qat"></table></div><div id="qan"></div></section>
+<section id="p-ins" class="hide"><ul id="il"></ul><div class="mut">Findings are computed from the data you loaded.</div></section>
+<section id="p-log" class="hide"><div class="tw" style="margin-top:12px"><table id="tl"></table></div></section>
+</div>
+</div>
+</main>
+<footer class="foot">Lunala · Smart Campus Analytics · built for KPMG in India, Challenge 04. Sample data is synthetic.</footer>
+</div>
+<div id="lpop" class="hide" role="dialog" aria-label="Chat with Lunala"><div class="ph"><span class="logo" data-s="32"></span><div style="flex:1"><b>Lunala</b><div class="mut" id="pmode" style="font-size:12px"></div></div><button class="x" id="pclose" aria-label="Close chat">&times;</button></div><div class="chat" id="pmsg"></div><div class="chips" id="pchips"></div><div class="row lin"><input id="pin" placeholder="Type a message..."><button class="btn p" id="psend">Send</button></div></div>
+<button id="lfab" class="hide" title="Chat with Lunala"></button>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let FILES=[],BASE=[],COLS=new Set(),LOG=[],RES=[],AV=[],CH={},SEG=[];
+const PSY=["conscientiousness","openness","extraversion","agreeableness","emotional_stability","grit","motivation","stress_level"],W={Academic:30,Attendance:20,LMS:10,Engagement:10,Placement:15,Feedback:5,Psychometrics:10},TH={hi:50,mid:70};
+const ACT={"Top performers":"Mentor others; fast-track for internships and leadership.","High academics, low placement readiness":"Aptitude, coding and mock-interview training.","At-risk, needs urgent support":"Faculty mentor, attendance follow-up, remedial classes.","Disengaged but capable":"Counselling and engagement drives: clubs, hackathons.","Steady middle":"Light nudges; encourage certifications and activities."};
+const SC={Beginner:30,Intermediate:60,Advanced:90};
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function parseCSV(t){const rows=[];let r=[],c="",q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch==','){r.push(c);c=""}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;r.push(c);rows.push(r);r=[];c=""}else c+=ch}if(c||r.length){r.push(c);rows.push(r)}
+ const h=(rows.shift()||[]).map(x=>x.trim().toLowerCase().replace(/\s+/g,"_"));return rows.filter(x=>x.length>1||x[0]).map(x=>Object.fromEntries(h.map((k,i)=>[k,(x[i]??"").trim()])))}
+function toCSV(rows){if(!rows.length)return"";const h=Object.keys(rows[0]);return[h.join(","),...rows.map(r=>h.map(k=>{const v=r[k]??"";return/[",\n]/.test(v)?'"'+String(v).replace(/"/g,'""')+'"':v}).join(","))].join("\n")}
+function dl(name,text,ty){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:ty||"text/csv"}));a.download=name;a.click()}
+function sample(){const R=rng(42),g=()=>{let u=R()||1e-9,v=R();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v)},cl=(x,a,b)=>Math.min(b,Math.max(a,x)),r1=x=>Math.round(x*10)/10,poi=l=>{const L=Math.exp(-l);let k=0,p=1;do{k++;p*=R()}while(p>L);return k-1};
+ const P=[],D=["CSE","IT","ECE","Mechanical","Civil"],F={academic:[],attendance:[],lms:[],engagement:[],placement:[],skills:[],feedback:[],psychometrics:[],weekly:[],survey:[]};
+ for(let i=0;i<500;i++){const id="S"+(1000+i),ab=g(),ef=g(),pr=g(),dep=D[Math.floor(R()*5)],cg=cl(6.8+ab+.5*ef+.4*g(),3,10);
+ F.academic.push({student_id:id,name:"Student "+i,department:dep,semester:1+Math.floor(R()*8),cgpa:i%50==3?"":cg.toFixed(2),backlogs:cg<6.5?poi(2.2):poi(.2)});
+ const at=cl(76+12*ef+3*ab+6*g(),25,100);F.attendance.push({student_id:id,overall_pct:i%80==5?105+i%40:r1(at)});
+ F.lms.push({student_id:id,logins_per_week:r1(cl(5+2.5*ef+1.5*g(),0,20)),assignment_completion_pct:r1(cl(70+14*ef+4*ab+8*g(),0,100))});
+ const eb=Math.max(.1,1.5+.9*ef+.5*pr),h=poi(eb*.35),cb=poi(eb*.5);F.engagement.push({student_id:id,events:poi(eb*1.5),clubs:cb,hackathons:h,certifications:poi(eb*.7)});
+ let p=55+14*pr+6*ab+4*(h+cb);if(R()<.18&&ab>.3)p-=28;
+ F.placement.push({student_id:id,aptitude:r1(cl(p+8*g(),0,100)),coding:r1(cl(p+(dep=="CSE"?5:0)+10*g(),0,100)),mock_interview:i%16==7?"":r1(cl(p-3+10*g(),0,100))});
+ const t=cl(p+8*g(),0,100),lv=t<40?"Beginner":t<70?"Intermediate":"Advanced";
+ F.skills.push({student_id:id,technical_skill:i%12==2?lv.toLowerCase():i%25==9?" "+lv.toUpperCase()+" ":lv,soft_skill_score:r1(cl(60+8*pr+4*ef+10*g(),0,100))});
+ const sb=g();F.psychometrics.push({student_id:id,conscientiousness:r1(cl(55+14*ef+9*g(),0,100)),openness:r1(cl(58+8*ab+12*g(),0,100)),extraversion:r1(cl(52+8*pr+14*g(),0,100)),agreeableness:r1(cl(62+12*g(),0,100)),emotional_stability:r1(cl(58+13*sb+8*g(),0,100)),grit:i%90==4?105:r1(cl(55+12*ef+5*ab+9*g(),0,100)),motivation:r1(cl(60+11*ef+6*pr+9*g(),0,100)),stress_level:i%30==11?"":r1(cl(48-12*sb+4*Math.min(cg<6.5?3:0,4)+9*g(),0,100))});
+ P.push({id,at,ef,sb,lg:F.lms[F.lms.length-1].logins_per_week});
+ if(i%17!=4)F.feedback.push({student_id:id,satisfaction:cl(Math.round(3.4+.4*ef+.8*g()),1,5),faculty_feedback:cl(Math.round(3.3+.5*ef+.3*ab+.8*g()),1,5)})}
+
+ const itm=(m,lo,hi,sd=.6)=>cl(Math.round(m+sd*g()),lo,hi);
+ P.forEach((p,i)=>{const st=R()<.05,cr=(i==37||i==211||i==402);
+  for(let w=1;w<=8;w++){const d=st&&w>4?(w-4)*7:0;F.weekly.push({student_id:p.id,week:w,attendance_pct:r1(cl(p.at-d+5*g(),0,100)),logins:r1(cl(p.lg*(st&&w>4?1-(w-4)*.18:1)+g(),0,30))})}
+  [1,2].forEach(wv=>{const bd=st&&wv==2,ps=cl(.38-.14*p.sb-.1*p.ef+(bd?.3:0)+.07*g(),0,1),wbl=cl(.68+.1*p.ef+.1*p.sb-(bd?.32:0)+.06*g(),0,1),lo=cl(.24-.18*p.sb+(bd?.32:0)+.08*g(),0,1),md=cl(.16-.15*p.sb+(bd?.32:0)+.08*g(),0,1);
+   const r={student_id:p.id,wave:wv,seconds:R()<.03?20+Math.round(10*R()):Math.round(170+40*g()),s1:"",s2:"",sh:cr&&wv==2?1:0,ref:bd&&R()<.4?1:0};
+   for(let j=1;j<=5;j++)r["w"+j]=itm(wbl*5,0,5);
+   [["p1",1],["p2",0],["p3",0],["p4",1]].forEach(([k,d])=>{const v=itm(ps*4,0,4);r[k]=d?v:4-v});
+   for(let j=1;j<=3;j++)r["u"+j]=itm(1+lo*2,1,3,.3);
+   ["q1","q2"].forEach(k=>r[k]=itm(md*3,0,3,.3));["g1","g2"].forEach(k=>r[k]=itm((ps*.7+md*.3)*3,0,3,.3));
+   ["b1","b2"].forEach(k=>r[k]=itm(1+(1-lo)*4,1,5));r.b3=6-itm(1+(1-lo)*4,1,5);["e1","e2","e3"].forEach(k=>r[k]=itm(1+(wbl*.6+.2)*4,1,5));
+   if(wbl<.5||lo>.5){r.s1=itm(1+(1-lo)*4,1,5);r.s2=itm(1+(1-lo)*4,1,5)}
+   if(R()<.03)CORE.forEach(k=>r[k]=3);F.survey.push(r)})});
+ const T0=Date.now(),iso=n=>new Date(T0+n*864e5).toISOString().slice(0,10),E=(title,type,host,d,dl,mode,location,skills,description,extra)=>F.events.push({title,type,host,date:iso(d),mode,location,deadline:dl==null?"":iso(dl),link:"",skills,team_size:"",prize:"",description,...extra});F.events=[];
+ E("CodeSprint 24-hour Hackathon","Hackathon","Nova Institute of Technology",21,12,"On campus","Innovation Lab","coding;teamwork","Build a working prototype in 24 hours. Beginners welcome, mentors on site.",{team_size:"2-4",prize:"Cash prizes and internship interviews"});
+ E("AI for Campus Online Hackathon","Hackathon","Riverbank University",35,26,"Online","","ai;coding;problem solving","Create an AI idea that improves student life. Free to join.",{team_size:"1-5",prize:"Certificates and mentoring"});
+ E("Smart City Innovation Challenge","Hackathon","Sunrise Engineering College",52,40,"Hybrid","Main auditorium","design;teamwork","Pitch and prototype solutions for city problems.",{team_size:"3-5",prize:"Seed funding pitch"});
+ E("Python for Data Analysis Workshop","Workshop","Riverbank University",8,5,"On campus","Lab 3","coding;data","Hands-on pandas and charts. Certificate on completion.",{});
+ E("Resume and LinkedIn Clinic","Workshop","Your campus career cell",5,3,"On campus","Seminar hall","communication","Get your resume reviewed and your profile polished.",{});
+ E("Intro to Cloud Computing","Workshop","Nova Institute of Technology",28,20,"Online","","cloud;coding","Beginner-friendly session with a free certificate.",{});
+ E("Mock Interview Day","Placement","Your campus placement cell",14,9,"On campus","Placement block","interviews;communication","Practice with real recruiters and get feedback.",{});
+ E("Aptitude Bootcamp","Placement","Your campus placement cell",10,6,"On campus","Room 204","aptitude;problem solving","Two evenings of quantitative and reasoning practice.",{});
+ E("Robotics Club Open Day","Club","Robotics Club",7,null,"On campus","Workshop hall","robotics;teamwork","Meet the team, see demos and join in.",{});
+ E("Photography Club Walk","Club","Photography Club",12,null,"On campus","Meet at main gate","creativity","A relaxed campus photo walk. All levels.",{});
+ E("Annual Tech Fest Inauguration","Event","Your campus",18,null,"On campus","Open ground","networking","Talks, stalls, games and a concert.",{});
+ E("Career Fair","Event","Your campus placement cell",40,30,"On campus","Convention hall","networking;interviews","Meet companies hiring freshers and interns.",{});
+ const FN=[["Dr. A. Mehta","CSE","Mentor","CSE Block, Room 101"],["Prof. S. Iyer","CSE","Faculty","CSE Block, Room 108"],["Prof. D. Singh","CSE","Faculty","CSE Block, Room 112"],["Dr. R. Nair","IT","Faculty","IT Block, Room 204"],["Prof. K. Desai","ECE","Faculty","ECE Block, Room 305"],["Dr. P. Shah","Mechanical","Faculty","Mech Block, Room 12"],["Prof. N. Kulkarni","Civil","Faculty","Civil Block, Room 7"],["Dr. L. Verma","Mathematics","Faculty","Main Block, Room 21"],["Ms. T. Joshi","Counselling Cell","Counsellor","Student Services, Room 2"],["Mr. V. Rao","Placement Cell","Placement officer","Placement Block, Room 1"]];
+ F.faculty=[];FN.forEach((f,k)=>{for(let d=1;d<=5;d++){const a=540+((k*50+d*30)%360),row=(st)=>({faculty:f[0],department:f[1],role:f[2],room:f[3],day:DAYS[d],start:hm(st),end:hm(st+75)});F.faculty.push(row(a));if(k%2==0)F.faculty.push(row(540+((k*70+d*45+240)%360)))}});
+ F.lms.push(...F.lms.slice(0,12));return F}
+// ---------- clean + integrate
+function build(){LOG=[];const m=new Map();
+ FILES.forEach(f=>{const seen=new Set();let dup=0;f.rows.forEach(r=>{const id=r.student_id;if(!id)return;if(seen.has(id)){dup++;return}seen.add(id);m.set(id,Object.assign(m.get(id)||{},r))});f.ids=seen;if(dup)LOG.push([f.name,"Duplicate student_id rows","Kept first occurrence",dup])});
+ const rows=[...m.values()];
+ FILES.forEach(f=>{const n=rows.filter(r=>!f.ids.has(r.student_id)).length;if(n)LOG.push([f.name,"Students missing from this file","Filled with column median",n])});
+ const keys=new Set();rows.forEach(r=>Object.keys(r).forEach(k=>keys.add(k)));keys.delete("student_id");COLS=new Set();
+ keys.forEach(k=>{const vals=rows.map(r=>r[k]).filter(v=>v!==undefined&&v!==""),nums=vals.filter(v=>!isNaN(parseFloat(v)));
+  if(vals.length&&nums.length>=.8*vals.length){COLS.add(k);rows.forEach(r=>{const n=parseFloat(r[k]);r[k]=isNaN(n)?null:n});
+   if(/pct|percent/.test(k)||PSY.includes(k)){let c=0;rows.forEach(r=>{if(r[k]>100){r[k]=100;c++}});if(c)LOG.push([k,"Value above 100","Capped at 100",c])}
+   const s=rows.map(r=>r[k]).filter(v=>v!=null).sort((a,b)=>a-b),med=s[Math.floor(s.length/2)];let c=0;rows.forEach(r=>{if(r[k]==null){r[k]=med;c++}});if(c)LOG.push([k,"Missing value","Filled with median ("+med+")",c])}
+  else if(k==="technical_skill"){let c=0;rows.forEach(r=>{const o=r[k],s=String(o??"").trim().toLowerCase(),v=s?s[0].toUpperCase()+s.slice(1):"Beginner";if(v!==o)c++;r[k]=v});if(c)LOG.push([k,"Inconsistent text or missing","Trimmed, title-cased, blanks set to Beginner",c])}});
+ BASE=rows}
+// ---------- scoring
+const has=(...c)=>c.every(k=>COLS.has(k)),wavg=p=>p.length?p.reduce((a,x)=>a+x[0]*x[1],0)/p.reduce((a,x)=>a+x[0],0):null,avg=x=>x.reduce((s,v)=>s+v,0)/(x.length||1);
+const IND={
+ Academic:r=>has("cgpa")?(has("backlogs")?.7*r.cgpa*10+.3*Math.max(0,100-r.backlogs*25):r.cgpa*10):null,
+ Attendance:r=>has("overall_pct")?r.overall_pct:null,
+ LMS:r=>{const p=[];if(has("logins_per_week"))p.push([.4,Math.min(r.logins_per_week/10,1)*100]);if(has("assignment_completion_pct"))p.push([.6,r.assignment_completion_pct]);return wavg(p)},
+ Engagement:r=>{const p=[["events",8],["clubs",10],["hackathons",15],["certifications",12]].filter(x=>has(x[0]));return p.length?p.reduce((a,x)=>a+r[x[0]]*x[1],0):null},
+ Placement:r=>{const t=["aptitude","coding","mock_interview"].filter(k=>has(k)).map(k=>r[k]),s=[];if(t.length)s.push([.7,avg(t)]);const k=[];if(r.technical_skill)k.push([.6,SC[r.technical_skill]??30]);if(has("soft_skill_score"))k.push([.4,r.soft_skill_score]);if(k.length)s.push([.3,wavg(k)]);return wavg(s)},
+ Psychometrics:r=>{const t=["conscientiousness","emotional_stability","grit","motivation"].filter(k=>has(k)).map(k=>r[k]);if(has("stress_level"))t.push(100-r.stress_level);return t.length?avg(t):null},
+ Feedback:r=>{const t=["satisfaction","faculty_feedback"].filter(k=>has(k)).map(k=>r[k]);return t.length?avg(t)/5*100:null}};
+function score(){AV=Object.keys(W).filter(k=>BASE.length&&IND[k](BASE[0])!=null);const tw=AV.reduce((a,k)=>a+W[k],0)||1;
+ RES=BASE.map(r=>{const o={...r,ind:{},pts:{},ar:[],pr:[],sr:[]};let s=0,dr=-1;AV.forEach(k=>{const v=Math.max(0,Math.min(100,IND[k](r)));o.ind[k]=v;o.pts[k]=W[k]/tw*v;s+=o.pts[k];const l=W[k]/tw*(100-v);if(l>dr){dr=l;o.drag=k}});
+  o.score=s;o.band=s<TH.hi?"High":s<TH.mid?"Medium":"Low";o.dept=r.department||"All";o.nm=r.name||r.student_id;
+  if(has("cgpa")&&r.cgpa<6)o.ar.push("CGPA below 6");if(has("overall_pct")&&r.overall_pct<60)o.ar.push("Attendance below 60%");if(has("backlogs")&&r.backlogs>=3)o.ar.push("3+ backlogs");
+  const t=["aptitude","coding","mock_interview"].filter(k=>has(k));if(t.length&&avg(t.map(k=>r[k]))<45)o.pr.push("Placement test average below 45");if(has("coding")&&r.coding<35)o.pr.push("Coding below 35");if(has("mock_interview")&&r.mock_interview<35)o.pr.push("Mock interview below 35");
+  if(has("stress_level")&&r.stress_level>75)o.sr.push("Stress level above 75");if(has("emotional_stability")&&r.emotional_stability<35)o.sr.push("Emotional stability below 35");if(has("grit")&&r.grit<35)o.sr.push("Grit below 35");o.flag=o.ar.length>0||o.pr.length>0||o.sr.length>0;return o});segment()}
+function segment(){if(RES.length<8||AV.length<2){RES.forEach(o=>o.seg="All students");SEG=[];return}
+ const X=RES.map(o=>AV.map(k=>o.ind[k])),mu=AV.map((_,j)=>avg(X.map(x=>x[j]))),sd=AV.map((_,j)=>Math.sqrt(avg(X.map(x=>(x[j]-mu[j])**2)))||1),Z=X.map(x=>x.map((v,j)=>(v-mu[j])/sd[j])),R=rng(7),K=4,d2=(a,b)=>a.reduce((s,v,j)=>s+(v-b[j])**2,0);
+ let C=[Z[Math.floor(R()*Z.length)]];while(C.length<K){const D=Z.map(z=>Math.min(...C.map(c=>d2(z,c))));let t=R()*D.reduce((a,b)=>a+b,0),i=0;while((t-=D[i])>0&&i<D.length-1)i++;C.push(Z[i])}
+ let lab=[];for(let it=0;it<30;it++){lab=Z.map(z=>{let b=0,bd=1e9;C.forEach((c,i)=>{const d=d2(z,c);if(d<bd){bd=d;b=i}});return b});C=C.map((c,i)=>{const m=Z.filter((_,n)=>lab[n]==i);return m.length?c.map((_,j)=>avg(m.map(z=>z[j]))):c})}
+ const sc=RES.map(o=>o.score).sort((a,b)=>a-b),q25=sc[Math.floor(sc.length*.25)],q75=sc[Math.floor(sc.length*.75)],mean=k=>avg(RES.map(o=>o.ind[k])),hab=["Engagement","LMS","Attendance"].filter(k=>AV.includes(k)),names={},seen={};
+ for(let c=0;c<K;c++){const m=RES.filter((_,i)=>lab[i]==c);if(!m.length)continue;const s=avg(m.map(o=>o.score)),a=AV.includes("Academic")?avg(m.map(o=>o.ind.Academic)):0,p=AV.includes("Placement")?avg(m.map(o=>o.ind.Placement)):0,h=hab.reduce((x,k)=>x+avg(m.map(o=>o.ind[k])),0),hm=hab.reduce((x,k)=>x+mean(k),0);let n;
+  if(s>=q75)n="Top performers";else if(AV.includes("Academic")&&AV.includes("Placement")&&a>mean("Academic")&&p<mean("Placement")-3)n="High academics, low placement readiness";else if(s<=q25)n="At-risk, needs urgent support";else if(hab.length&&h<hm-5)n="Disengaged but capable";else n="Steady middle";
+  seen[n]=(seen[n]||0)+1;names[c]=seen[n]>1?n+" ("+seen[n]+")":n}
+ RES.forEach((o,i)=>o.seg=names[lab[i]]);SEG=Object.values(names).map(n=>{const m=RES.filter(o=>o.seg==n);return{n,c:m.length,s:avg(m.map(o=>o.score)),f:m.filter(o=>o.flag).length/m.length,a:ACT[n.split(" (")[0]]||""}}).sort((a,b)=>b.s-a.s)}
+// ---------- UI
+const BC={High:"#d62839",Medium:"#e09f00",Low:"#2b9348"};
+const view=()=>RES.filter(o=>($("#fd").value=="All"||o.dept==$("#fd").value)&&($("#fb").value=="All"||o.band==$("#fb").value));
+function mk(id,cfg){CH[id]&&CH[id].destroy();CH[id]=new Chart($("#"+id),cfg)}
+function tbl(el,h,rows){$(el).innerHTML="<tr>"+h.map(x=>"<th>"+x+"</th>").join("")+"</tr>"+rows.map(r=>"<tr>"+r.map(c=>"<td>"+c+"</td>").join("")+"</tr>").join("")}
+const tag=b=>`<span class="tag ${b}">${b}</span>`;
+function render(){const v=view();Chart.defaults.color=getComputedStyle(document.documentElement).getPropertyValue("--mut").trim()||"#888";Chart.defaults.maintainAspectRatio=false;
+ $("#kpi").innerHTML=[["Students",v.length],["Avg score",avg(v.map(o=>o.score)).toFixed(1)],["High risk",v.filter(o=>o.band=="High").length],["Academic flags",v.filter(o=>o.ar.length).length],["Placement flags",v.filter(o=>o.pr.length).length],["Wellbeing flags",v.filter(o=>o.sr.length).length]].map(x=>`<div><span class="mut">${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ const bins=[...Array(14)].map((_,i)=>30+i*5);mk("c1",{type:"bar",data:{labels:bins.map(b=>b+"-"+(b+4)),datasets:["High","Medium","Low"].map(b=>({label:b,backgroundColor:BC[b],data:bins.map(x=>v.filter(o=>o.band==b&&o.score>=x&&o.score<x+5).length)}))},options:{scales:{x:{stacked:true},y:{stacked:true}},plugins:{title:{display:true,text:"Success Score distribution"}}}});
+ const ds=[...new Set(v.map(o=>o.dept))];mk("c2",{type:"bar",data:{labels:ds,datasets:[{label:"% with a risk flag",backgroundColor:"#6c4cf1",data:ds.map(d=>{const m=v.filter(o=>o.dept==d);return Math.round(m.filter(o=>o.flag).length/m.length*100)})},{label:"Avg score",backgroundColor:"#18b6c9",data:ds.map(d=>Math.round(avg(v.filter(o=>o.dept==d).map(o=>o.score))))}]},options:{plugins:{title:{display:true,text:"By department"}}}});
+ const two=AV.includes("Academic")&&AV.includes("Placement"),sg=[...new Set(v.map(o=>o.seg))],pal=["#18b6c9","#2b9348","#e09f00","#d62839","#9b59b6"];
+ mk("c3",{type:"scatter",data:{datasets:sg.map((s,i)=>({label:s,backgroundColor:pal[i%5],pointRadius:3,data:v.filter(o=>o.seg==s).map(o=>({x:two?o.ind.Academic:o.ind[AV[0]],y:two?o.ind.Placement:o.score}))}))},options:{plugins:{title:{display:true,text:two?"Academic vs Placement readiness (segments)":"Segments"}},scales:{x:{title:{display:true,text:two?"Academic":AV[0]}},y:{title:{display:true,text:two?"Placement":"Score"}}}}});
+ mk("c4",{type:"bar",data:{labels:AV,datasets:[{label:"Average indicator score",backgroundColor:"#6c4cf1",data:AV.map(k=>+avg(v.map(o=>o.ind[k])).toFixed(1))}]},options:{indexAxis:"y",plugins:{title:{display:true,text:"Where is the group weak?"}},scales:{x:{max:100}}}});
+ const r=v.filter(o=>o.flag||o.band=="High").sort((a,b)=>a.score-b.score);
+ tbl("#tr",["ID","Name","Dept","Score","Band","Biggest drag","Why flagged","Segment","Suggested action"],r.slice(0,150).map(o=>[esc(o.student_id),esc(o.nm),esc(o.dept),o.score.toFixed(1),tag(o.band),esc(o.drag),esc(fl(o).join("; ")||"-"),esc(o.seg),esc(ACT[o.seg.split(" (")[0]]||"")]));
+ const so=[...v].sort((a,b)=>a.score-b.score);$("#ss").innerHTML=so.map(o=>`<option value="${esc(o.student_id)}">${esc(o.student_id)} · ${esc(o.nm)} (${o.score.toFixed(0)})</option>`).join("");stu();
+ tbl("#tg",["Segment","Students","Avg score","% with risk flag","Suggested action"],SEG.map(s=>[esc(s.n),s.c,s.s.toFixed(1),(s.f*100).toFixed(0)+"%",esc(s.a)]));
+ const pt=PSY.filter(k=>COLS.has(k));$("#pn").textContent=pt.length?"":"No psychometric columns found. Add a file with columns like conscientiousness, grit, motivation, stress_level.";
+ if(pt.length){mk("c6",{type:"bar",data:{labels:pt.map(k=>k.replace("_"," ")),datasets:[{label:"Group average (0-100)",backgroundColor:pt.map(k=>k=="stress_level"?"#d62839":"#18b6c9"),data:pt.map(k=>+avg(v.map(o=>o[k])).toFixed(1))}]},options:{indexAxis:"y",scales:{x:{max:100}},plugins:{title:{display:true,text:"Average psychometric profile"}}}});
+ const tk=pt.includes("conscientiousness")?"conscientiousness":pt[0];mk("c7",{type:"scatter",data:{datasets:["High","Medium","Low"].map(b=>({label:b,backgroundColor:BC[b],pointRadius:3,data:v.filter(o=>o.band==b).map(o=>({x:o[tk],y:o.score}))}))},options:{plugins:{title:{display:true,text:tk.replace("_"," ")+" vs Success Score"}},scales:{x:{title:{display:true,text:tk.replace("_"," ")}},y:{title:{display:true,text:"Success Score"}}}}})}
+ $("#il").innerHTML=insights().map(x=>"<li>"+esc(x)+"</li>").join("");
+ tbl("#tl",["Where","Issue","Action","Rows"],LOG.map(l=>l.map(esc)));renderWB()}
+function stu(){const o=RES.find(x=>x.student_id==$("#ss").value);if(!o){$("#sd").innerHTML="";return}const tw=AV.reduce((a,k)=>a+W[k],0);
+ $("#sd").innerHTML=`<div class="row" style="margin:10px 0"><b style="font-size:26px">${o.score.toFixed(1)}</b>${tag(o.band)}<span class="mut">${esc(o.seg)}</span></div><div>Biggest drag: <b>${esc(o.drag)}</b><br>Flags: ${esc(fl(o).join("; ")||"None")}</div>${isCn()&&PSY.some(k=>COLS.has(k))?`<div class="mut" style="margin-top:6px">Traits: ${PSY.filter(k=>COLS.has(k)).map(k=>k.replace("_"," ")+" "+Math.round(o[k])).join(" · ")}</div>`:""}<div class="tip">Suggested action: ${esc(ACT[o.seg.split(" (")[0]]||"Review with faculty mentor.")}</div>`;
+ mk("c5",{type:"bar",data:{labels:AV,datasets:[{label:"Points earned",backgroundColor:"#2b9348",data:AV.map(k=>+o.pts[k].toFixed(1))},{label:"Points lost",backgroundColor:"#d6283966",data:AV.map(k=>+(W[k]/tw*100-o.pts[k]).toFixed(1))}]},options:{scales:{x:{stacked:true},y:{stacked:true}},plugins:{title:{display:true,text:"Why this score? Points earned vs lost per indicator"}}}})}
+function insights(){const a=RES,o=[];
+ if(COLS.has("overall_pct")){const lo=a.filter(r=>r.overall_pct<60),hi=a.filter(r=>r.overall_pct>=75);if(lo.length&&hi.length)o.push(`Students under 60% attendance average a score of ${avg(lo.map(r=>r.score)).toFixed(0)} versus ${avg(hi.map(r=>r.score)).toFixed(0)} at 75% or above (${lo.length} students in the low group).`)}
+ if(AV.includes("Academic")&&AV.includes("Placement")){const g=a.filter(r=>r.ind.Academic>=75&&r.ind.Placement<55);o.push(`${g.length} students (${(g.length/a.length*100).toFixed(0)}%) are strong academically (75+) but weak in placement readiness (below 55). Target them with aptitude and mock-interview training.`)}
+ if(AV.includes("Engagement")&&AV.includes("Placement")){const s=[...a].sort((x,y)=>x.ind.Engagement-y.ind.Engagement),q=Math.floor(a.length/4);o.push(`The most engaged quarter averages ${avg(s.slice(-q).map(r=>r.ind.Placement)).toFixed(0)} placement readiness versus ${avg(s.slice(0,q).map(r=>r.ind.Placement)).toFixed(0)} for the least engaged.`)}
+ if(has("stress_level")&&has("backlogs")){const hi=a.filter(r=>r.stress_level>65),lo=a.filter(r=>r.stress_level<40);if(hi.length&&lo.length)o.push(`${hi.length} students report high stress (above 65). They average ${avg(hi.map(r=>r.backlogs)).toFixed(1)} backlogs versus ${avg(lo.map(r=>r.backlogs)).toFixed(1)} for low-stress students, so backlog support and early counselling may go together.`)}
+ if(has("conscientiousness")){const s=[...a].sort((x,y)=>x.conscientiousness-y.conscientiousness),q=Math.floor(a.length/4);o.push(`The most conscientious quarter averages a Success Score of ${avg(s.slice(-q).map(r=>r.score)).toFixed(0)} versus ${avg(s.slice(0,q).map(r=>r.score)).toFixed(0)} for the least.`)}
+ const ds=[...new Set(a.map(r=>r.dept))];if(ds.length>1){const x=ds.map(d=>{const m=a.filter(r=>r.dept==d);return[d,m.filter(r=>r.flag).length/m.length]}).sort((p,q)=>q[1]-p[1]);o.push(`${x[0][0]} has the highest share of flagged students (${(x[0][1]*100).toFixed(0)}%); ${x[x.length-1][0]} has the lowest (${(x[x.length-1][1]*100).toFixed(0)}%).`)}
+ const h=a.filter(r=>r.band=="High");if(h.length){const c={};h.forEach(r=>c[r.drag]=(c[r.drag]||0)+1);const t=Object.entries(c).sort((p,q)=>q[1]-p[1])[0];o.push(`Among High-risk students, the most common biggest drag is ${t[0]} (${(t[1]/h.length*100).toFixed(0)}% of them).`)}
+ return o.length?o:["Add more data columns to unlock insights."]}
+function go(){if(!FILES.length)return;build();if(!BASE.length){alert("No rows with a student_id column were found.");return}
+ $("#fl").textContent=FILES.map(f=>f.name).join(", ");$("#app").classList.remove("hide");
+ $("#ws").innerHTML=Object.keys(W).map(k=>`<div class="sl"><b>${k}</b><input type="range" min="0" max="60" value="${W[k]}" data-w="${k}"><span class="mut" id="w-${k}"></span></div>`).join("");
+ document.querySelectorAll("[data-w]").forEach(i=>i.oninput=()=>{W[i.dataset.w]=+i.value;recalc()});
+ const d=[...new Set(BASE.map(r=>r.department||"All"))].sort();$("#fd").innerHTML="<option>All</option>"+d.map(x=>`<option>${esc(x)}</option>`).join("");recalc();svInit();renderBrief();lunInit();renderMe();renderOpp();renderFb();renderFbi()}
+function recalc(){TH.hi=+$("#th1").value||50;TH.mid=+$("#th2").value||70;score();wbEngine();const tw=AV.reduce((a,k)=>a+W[k],0)||1;Object.keys(W).forEach(k=>{const e=$("#w-"+k);if(e)e.textContent=AV.includes(k)?Math.round(W[k]/tw*100)+"%":"n/a"});render()}
+// ---------- psychometrics engine + early alerts
+const REQ=new Set(),URG=new Set();
+let FU={},WEEKLY=[],SURVRAW=[],LIVE=[],SV=[],AL=[],WK={},STAT={},SVY=null;
+const CORE=["w1","w2","w3","w4","w5","p1","p2","p3","p4","u1","u2","u3","q1","q2","g1","g2","b1","b2","b3","e1","e2","e3"];
+const SCL=[
+ {k:"wb",n:"Wellbeing (WHO-5)",it:["w1","w2","w3","w4","w5"],mn:0,mx:5,rev:[],good:1,low:52},
+ {k:"ps",n:"Perceived stress (PSS-4)",it:["p1","p2","p3","p4"],mn:0,mx:4,rev:["p2","p3"],good:0,high:62},
+ {k:"lo",n:"Loneliness (UCLA-3)",it:["u1","u2","u3"],mn:1,mx:3,rev:[],good:0,high:50},
+ {k:"ph",n:"Low mood (PHQ-2)",it:["q1","q2"],mn:0,mx:3,rev:[],good:0,high:50},
+ {k:"ga",n:"Anxiety (GAD-2)",it:["g1","g2"],mn:0,mx:3,rev:[],good:0,high:50},
+ {k:"be",n:"Belonging",it:["b1","b2","b3"],mn:1,mx:5,rev:["b3"],good:1,low:40},
+ {k:"ef",n:"Study confidence",it:["e1","e2","e3"],mn:1,mx:5,rev:[],good:1,low:40},
+ {k:"su",n:"Support network (adaptive)",it:["s1","s2"],mn:1,mx:5,rev:[],good:1,low:40,opt:1}];
+const nv=v=>{const n=parseFloat(v);return isNaN(n)?null:n};
+const adj=(v,k,s)=>v==null?null:s.rev.includes(k)?s.mn+s.mx-v:v;
+const NS={Urgent:"Counsellor contacts the student today and follows the college crisis protocol. If you believe someone is in immediate danger, do not leave them alone and call emergency services (112).",High:"Counsellor reaches out within 2 working days with a warm, private invitation to talk.",Watch:"Class coordinator holds a casual, private check-in this week. Ask how things are going. Do not mention scores or the survey, and do not discuss it with other students."};
+function route(list){WEEKLY=[];SURVRAW=[];LIVE=[];FILES=[];EVENTS=[];FAC=[];list.forEach(f=>{const h=Object.keys(f.rows[0]||{});if(h.includes("week"))WEEKLY.push(...f.rows);else if(h.includes("faculty")&&h.includes("start")&&h.includes("end"))FAC.push(...f.rows);else if(h.includes("host")&&h.includes("title"))EVENTS.push(...f.rows);else if(h.includes("wave")||h.includes("w1"))SURVRAW.push(...f.rows);else FILES.push(f)})}
+function parseSv(r){const o={id:r.student_id,wave:nv(r.wave)||1,sec:nv(r.seconds),sh:nv(r.sh)||0,ref:nv(r.ref)||0,raw:{},pct:{},flags:[]};
+ CORE.concat(["s1","s2"]).forEach(k=>o.raw[k]=nv(r[k]));let bad=0;
+ SCL.forEach(s=>{const v=s.it.map(k=>adj(o.raw[k],k,s)).filter(x=>x!=null);if(!v.length&&s.opt)return;if(v.length<Math.ceil(.8*s.it.length)){o.pct[s.k]=null;bad++;return}o.pct[s.k]=(avg(v)-s.mn)/(s.mx-s.mn)*100});
+ if(bad)o.flags.push("Incomplete answers");
+ let run=1,best=1,pv=null;CORE.forEach(k=>{const v=o.raw[k];if(v!=null&&v===pv){run++;best=Math.max(best,run)}else run=1;pv=v});if(best>=10)o.flags.push("Same answer repeated (straight-lining)");
+ if(o.sec!=null&&o.sec<45)o.flags.push("Completed unusually fast");
+ const A=k=>adj(o.raw[k],k,SCL[1]);if([["p1","p2"],["p3","p4"]].some(([a,b])=>A(a)!=null&&A(b)!=null&&Math.abs(A(a)-A(b))>=3))o.flags.push("Inconsistent answers");
+ return o}
+function alpha(rows,items){const X=rows.filter(r=>items.every(k=>r[k]!=null)).map(r=>items.map(k=>r[k]));if(X.length<20)return null;const k=items.length,vr=a=>{const m=avg(a);return avg(a.map(v=>(v-m)**2))};
+ if(k==2){const a=X.map(x=>x[0]),b=X.map(x=>x[1]),ma=avg(a),mb=avg(b),c=avg(a.map((v,i)=>(v-ma)*(b[i]-mb))),r=c/Math.sqrt(vr(a)*vr(b));return 2*r/(1+r)}
+ const tv=vr(X.map(x=>x.reduce((s,v)=>s+v,0))),iv=items.reduce((s,_,j)=>s+vr(X.map(x=>x[j])),0);return k/(k-1)*(1-iv/tv)}
+const rci=(s,a,b)=>{const t=STAT[s.k];if(!t||t.a==null||t.sd==null||a==null||b==null)return null;const sd=Math.SQRT2*t.sd*Math.sqrt(Math.max(0,1-t.a));return sd?(b-a)/sd:null};
+function wbEngine(){SV=[...SURVRAW,...LIVE].map(parseSv).filter(o=>o.id);const ok=SV.filter(o=>!o.flags.length);STAT={};
+ SCL.forEach(s=>{const rows=ok.map(o=>Object.fromEntries(s.it.map(k=>[k,adj(o.raw[k],k,s)]))),ps=ok.map(o=>o.pct[s.k]).filter(x=>x!=null),m=ps.length?avg(ps):null;
+  STAT[s.k]={a:alpha(rows,s.it),m,sd:ps.length?Math.sqrt(avg(ps.map(x=>(x-m)**2))):null,n:ps.length,fl:ps.length?ps.filter(x=>s.good?x<s.low:x>=s.high).length/ps.length:null}});
+ WK={};WEEKLY.forEach(w=>(WK[w.student_id]=WK[w.student_id]||[]).push({w:nv(w.week),a:nv(w.attendance_pct),l:nv(w.logins)}));Object.values(WK).forEach(a=>a.sort((x,y)=>x.w-y.w));
+ const by={};SV.forEach(o=>(by[o.id]=by[o.id]||[]).push(o));Object.values(by).forEach(a=>a.sort((x,y)=>x.wave-y.wave));
+ const RM=Object.fromEntries(RES.map(o=>[o.student_id,o])),ids=new Set([...Object.keys(by),...REQ,...Object.keys(WK),...RES.filter(o=>o.band=="High").map(o=>o.student_id)]);AL=[];
+ ids.forEach(id=>{const a=by[id]||[],cur=a[a.length-1],prev=a.length>1?a[a.length-2]:null,P=[],add=(src,p,t,g)=>P.push({src,p,t,g});let crisis=false,ref=false,nsc=0,flags=[];
+  const GS="Wellbeing check-in suggests a supportive conversation would help";
+  if(cur){flags=cur.flags;const c=cur.pct,m=flags.length?.75:1,S=[],sa=(k,p,t,g=GS)=>S.push({k,p:p*m,t,g});
+   if(c.wb!=null){if(c.wb<29)sa("wb",30,`Very low wellbeing (WHO-5 index ${c.wb.toFixed(0)})`);else if(c.wb<52)sa("wb",15,`Low wellbeing (WHO-5 index ${c.wb.toFixed(0)})`)}
+   if(c.ph!=null&&c.ph>=50)sa("ph",20,"Low-mood screen positive (PHQ-2)");if(c.ga!=null&&c.ga>=50)sa("ga",15,"Anxiety screen positive (GAD-2)");
+   if(c.ps!=null&&c.ps>=62)sa("ps",10,"High perceived stress");if(c.lo!=null&&c.lo>=50)sa("lo",15,"Feels lonely (UCLA-3)");
+   if(c.be!=null&&c.be<40)sa("be",10,"Low sense of belonging");if(c.su!=null&&c.su<40)sa("su",5,"Few people to turn to for support");
+   if(prev){let n=0;SCL.forEach(s=>{const z=rci(s,prev.pct[s.k],c[s.k]);if(z!=null&&n<25&&((s.good&&z<-1.96)||(!s.good&&z>1.96))){n+=10;sa(s.k+"_rci",10,`${s.n} worsened reliably since the last check-in (RCI ${z.toFixed(1)})`,"Survey answers changed noticeably since the last check-in")}})}
+   nsc=new Set(S.map(x=>x.k.replace("_rci",""))).size;S.forEach(x=>add("survey",x.p,x.t,x.g));
+   if(cur.sh>0){crisis=true;add("survey",100,"Student reported thoughts of self-harm (check-in safety item)","Urgent: the counsellor has been notified")}
+   if(cur.ref){ref=true;add("survey",25,"Student asked to talk to a counsellor","Student asked for a conversation")}}
+  if(URG.has(id)&&!crisis){crisis=true;add("survey",100,"Student asked for urgent help in the Lunala chat","Urgent: the counsellor has been notified")}if(REQ.has(id)&&!ref){ref=true;add("survey",25,"Student asked to talk to a counsellor","Student asked for a conversation")}
+  const wk=WK[id];if(wk&&wk.length>=6){const at=wk.map(x=>x.a),lg=wk.map(x=>x.l),b=avg(at.slice(0,3)),rec=avg(at.slice(-3));
+   if(b-rec>=15)add("behaviour",20,`Attendance fell from ${b.toFixed(0)}% to ${rec.toFixed(0)}% over ${at.length} weeks`,"Attendance has dropped recently");
+   if(rec<60)add("behaviour",10,`Recent attendance is ${rec.toFixed(0)}%`,"Recent attendance is low");
+   const lb=avg(lg.slice(0,3)),lr=avg(lg.slice(-3));if(lb>0&&lr/lb<=.5)add("behaviour",10,`LMS logins fell from ${lb.toFixed(1)} to ${lr.toFixed(1)} per week`,"LMS activity has dropped recently")}
+  const st=RM[id];if(st){if(st.band=="High")add("academic",10,"Success Score is in the High-risk band","Academic performance is low");if(st.backlogs>=3)add("academic",5,"3 or more backlogs","Several backlogs")}
+  const sc=P.reduce((x,y)=>x+y.p,0),src=[...new Set(P.map(x=>x.src))],corr=src.length+(nsc>=3?1:0);let lv=null;
+  if(crisis)lv="Urgent";else if(ref||(sc>=70&&corr>=2))lv="High";else if(sc>=35)lv="Watch";if(!lv)return;
+  AL.push({id,nm:st?st.nm:id,sc,lv,route:lv=="Watch"?"Class coordinator":"Counsellor",src,P,flags,corr,note:(!crisis&&!ref&&sc>=70&&corr<2)?"Only one data source supports this alert, so start with a friendly check-in before escalating.":""})});
+ AL.sort((x,y)=>["Urgent","High","Watch"].indexOf(x.lv)-["Urgent","High","Watch"].indexOf(y.lv)||y.sc-x.sc)}
+// ---------- alerts UI
+function renderWB(){renderAl();renderQA()}
+function renderAl(){const cn=isCn(),cap=+$("#cap").value||15,fs=a=>(FU[a.id]||{}).s||"New";
+ const open=AL.filter(a=>fs(a)!="Resolved"),cs=open.filter(a=>a.route=="Counsellor"),slot={};cs.forEach((a,i)=>slot[a.id]=i<cap?"This week":"Queue");const c=l=>open.filter(a=>a.lv==l).length;
+ $("#alk").innerHTML=[["Urgent",c("Urgent")],["High",c("High")],["Watch",c("Watch")],["Over counsellor capacity",Math.max(0,cs.length-cap)],["Resolved",AL.length-open.length],["Low-validity surveys",SV.filter(o=>o.flags.length).length]].map(x=>`<div><span class="mut">${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ const why=a=>[...new Set(a.P.map(x=>cn?x.t:x.g))].slice(0,3).join("; ");
+ tbl("#alt",["Level","Student","Priority","Route","Why (top reasons)","Follow-up"],AL.slice(0,200).map(a=>[tag(a.lv),`<a href="#" data-al="${esc(a.id)}">${esc(a.nm)}</a><br><span class="mut">${esc(a.id)}</span>`,a.sc.toFixed(0),esc(a.route)+(slot[a.id]?`<br><span class="mut">${slot[a.id]}</span>`:""),esc(why(a)),`<select data-fu="${esc(a.id)}">${["New","Contacted","Escalated","Resolved"].map(x=>`<option${x==fs(a)?" selected":""}>${x}</option>`).join("")}</select>`]));
+ document.querySelectorAll("[data-al]").forEach(l=>l.onclick=e=>{e.preventDefault();alDetail(l.dataset.al)});
+ document.querySelectorAll("[data-fu]").forEach(x=>x.onchange=()=>{(FU[x.dataset.fu]=FU[x.dataset.fu]||{s:"New",n:""}).s=x.value;renderAl()});
+ if(!AL.length)$("#ald").innerHTML=`<div class="tip">No alerts yet. Load the sample data (it includes survey and weekly files) or complete a check-in.</div>`}
+function alDetail(id){const a=AL.find(x=>x.id==id);if(!a)return;const cn=isCn(),wk=WK[id],rs=cn?a.P.map(x=>x.t):[...new Set(a.P.map(x=>x.g))];
+ $("#ald").innerHTML=`<div class="card"><div class="row">${tag(a.lv)}<b>${esc(a.nm)}</b><span class="mut">${esc(a.id)} · route: ${esc(a.route)} · priority ${a.sc.toFixed(0)} · ${a.corr} corroborating source(s)</span></div>
+ <h2 style="margin-top:10px">Why this alert</h2><ul>${rs.map(x=>"<li>"+esc(x)+"</li>").join("")}</ul>
+ ${a.flags.length?`<div class="tip">Survey quality: ${esc(a.flags.join(", "))}. Treat survey signals with caution and re-check with the student.</div>`:""}${a.note?`<div class="tip">${esc(a.note)}</div>`:""}
+ <h2 style="margin-top:10px">Suggested next step</h2><div>${esc(NS[a.lv])}</div>
+ ${wk?`<div class="cv" style="height:220px;margin-top:10px"><canvas id="c8"></canvas></div>`:""}
+ ${cn?`<h2 style="margin-top:10px">Follow-up note</h2><textarea id="fun" rows="2" placeholder="Private note (kept for this session; download alerts to save)" style="width:100%;background:var(--chip);color:var(--text);border:1px solid var(--bd);border-radius:8px;padding:8px">${esc((FU[id]||{}).n||"")}</textarea><div class="row" style="margin-top:10px"><button class="btn p" id="aib">Draft counsellor briefing (AI)</button><span class="mut">AI drafts are suggestions. A human decides.</span></div><div id="aio" style="white-space:pre-wrap;margin-top:8px"></div>`:`<div class="mut" style="margin-top:8px">Switch to Counsellor view to see survey detail and draft an AI briefing.</div>`}</div>`;
+ if(wk){const wks=[...new Set(WEEKLY.map(w=>nv(w.week)))].sort((x,y)=>x-y);mk("c8",{type:"line",data:{labels:wks.map(w=>"Wk "+w),datasets:[{label:"Student attendance %",borderColor:"#d62839",data:wks.map(w=>{const x=wk.find(y=>y.w==w);return x?x.a:null})},{label:"Cohort average",borderColor:"#9aa5bd",borderDash:[4,4],data:wks.map(w=>+avg(WEEKLY.filter(x=>nv(x.week)==w).map(x=>nv(x.attendance_pct))).toFixed(1))}]},options:{scales:{y:{min:0,max:100}}}})}
+ if(cn){$("#aib").onclick=()=>brief(a);$("#fun").onchange=e=>{(FU[id]=FU[id]||{s:"New",n:""}).n=e.target.value}}$("#ald").scrollIntoView({behavior:"smooth"})}
+async function brief(a){const o=$("#aio");let sm=null;try{sm=typeof claude!=="undefined"?await claude.use("sample"):null}catch(e){}if(!sm){o.textContent="AI drafting is not available in this view.";return}
+ o.textContent="Thinking...";const p=`You are helping a college counsellor prepare for a supportive conversation. Write a short, warm, non-diagnostic briefing (under 140 words) and 3 gentle conversation openers. Do not diagnose, label, or speculate about causes. Remind them a human decides next steps. Alert level: ${a.lv}. Signals:\n${a.P.map(x=>"- "+x.t).join("\n")}`+(a.lv=="Urgent"?"\nThis is urgent: tell the counsellor to follow the college crisis protocol and contact the student today.":"");
+ try{const r=await sm(p,{modelTier:"quick",cache:false,onText:x=>{o.textContent=x.text}});o.textContent=r.text}catch(e){o.textContent=e.code=="not_granted"?"Permission was declined.":"Could not draft a briefing right now."}}
+function renderQA(){const rel=a=>a==null?"n/a":a>=.8?"Good":a>=.7?"Acceptable":a>=.6?"Questionable":"Poor";
+ if(!SV.length){$("#qat").innerHTML="";$("#qan").innerHTML=`<div class="tip">No survey data yet. Load the sample data or complete a check-in.</div>`;return}
+ tbl("#qat",["Scale","Items","Reliability (α)","Verdict","Cohort mean (0-100)","SD","% flagged","Responses"],SCL.map(s=>{const t=STAT[s.k]||{};return[esc(s.n),s.it.length,t.a==null?"n/a":t.a.toFixed(2),rel(t.a),t.m==null?"-":t.m.toFixed(1),t.sd==null?"-":t.sd.toFixed(1),t.fl==null?"-":(t.fl*100).toFixed(0)+"%",t.n||0]}));
+ const c={};SV.forEach(o=>o.flags.forEach(f=>c[f]=(c[f]||0)+1));
+ $("#qan").innerHTML=`<div class="card"><h2>Response validity</h2>${Object.keys(c).length?Object.entries(c).map(([k,v])=>`<div>${esc(k)}: <b>${v}</b></div>`).join(""):"No validity problems found."}<div class="mut" style="margin-top:6px">Flagged surveys still count, but their survey points are reduced by 25% and the alert says to re-check. Reliability and norms use only clean responses. Change scores use the Reliable Change Index (a change counts only if it is bigger than measurement noise).</div></div>
+ <div class="card"><h2>Honest limits</h2><ul class="mut"><li>These are short, adapted forms. Before real use, license the originals and validate them locally (including test-retest and fairness by department and gender).</li><li>Norms here are your own cohort, not national norms.</li><li>Screens are not diagnoses. Every alert goes to a human.</li><li>Sample data is synthetic, so reliability is partly an artefact of how it was generated.</li></ul><div class="row" style="margin-top:8px"><button class="btn" id="dsv">Download survey responses (CSV)</button></div></div>`;
+ $("#dsv").onclick=()=>dl("survey_responses.csv",toCSV([...SURVRAW,...LIVE].map(r=>Object.fromEntries(["student_id","wave","seconds",...CORE,"s1","s2","sh","ref"].map(k=>[k,r[k]??""])))))}
+// ---------- student check-in survey (voluntary)
+const OPT={w:[[5,"All of the time"],[4,"Most of the time"],[3,"More than half the time"],[2,"Less than half the time"],[1,"Some of the time"],[0,"At no time"]],p:[[0,"Never"],[1,"Almost never"],[2,"Sometimes"],[3,"Fairly often"],[4,"Very often"]],u:[[1,"Hardly ever"],[2,"Some of the time"],[3,"Often"]],q:[[0,"Not at all"],[1,"Several days"],[2,"More than half the days"],[3,"Nearly every day"]],a:[[1,"Strongly disagree"],[2,"Disagree"],[3,"Neutral"],[4,"Agree"],[5,"Strongly agree"]]};
+const QS=[["w1","w","I have felt cheerful and in good spirits","In the last 2 weeks"],["w2","w","I have felt calm and relaxed"],["w3","w","I have felt active and full of energy"],["w4","w","I woke up feeling fresh and rested"],["w5","w","My daily life has been filled with things that interest me"],
+["p1","p","felt unable to control the important things in your life","In the last month, how often have you..."],["p2","p","felt confident about handling your personal problems"],["p3","p","felt that things were going your way"],["p4","p","felt difficulties piling up so high you could not overcome them"],
+["u1","u","How often do you feel that you lack companionship?","About how you connect with people"],["u2","u","How often do you feel left out?"],["u3","u","How often do you feel isolated from others?"],
+["q1","q","Little interest or pleasure in doing things","Over the last 2 weeks, how often have you been bothered by..."],["q2","q","Feeling down, low or hopeless"],["g1","q","Feeling nervous, anxious or on edge"],["g2","q","Not being able to stop or control worrying"],
+["b1","a","I feel I belong in my college community","How much do you agree?"],["b2","a","I have friends here I can count on"],["b3","a","I often feel like an outsider in my class"],["e1","a","I can master the content of my courses"],["e2","a","I can do well in exams if I prepare"],["e3","a","I can keep up with my workload"]];
+const SUQ=[["s1","a","I have someone I can talk to when things get hard","A few more questions"],["s2","a","I know where to go on campus if I need help"]],SHQ=["sh","q","Have you had thoughts of harming yourself, or that you would be better off not being here?","One important question"];
+const HELP=`Tele-MANAS 14416 (free, 24x7). In an emergency call 112. Please check these numbers are current for your area.`;
+const LOGO=s=>`<svg viewBox="0 0 40 40" width="${s}" height="${s}" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#6c4cf1"/><circle cx="18" cy="21" r="11" fill="#fff"/><circle cx="24" cy="17" r="10" fill="#6c4cf1"/><circle cx="29" cy="11" r="1.6" fill="#fff"/><circle cx="31" cy="21" r="1" fill="#fff"/></svg>`;
+const AVT=`<span class="av">${LOGO(28)}</span>`;
+const TABS=[["me","My progress"],["fb","Suggest and complain"],["fbi","Feedback inbox"],["opp","Opportunities"],["over","Overview"],["risk","At-risk students"],["stu","Student detail"],["seg","Segments"],["psy","Psychometrics"],["sv","Check-in survey"],["al","Early alerts"],["qa","Survey quality"],["ins","Insights"],["log","Data cleaning log"]];
+// ---------- auth + roles (demo, client-side)
+const USERS={admin:{p:"admin123",role:"admin",name:"Admin"},faculty:{p:"faculty123",role:"faculty",name:"Faculty member"},counsellor:{p:"care123",role:"counsellor",name:"Counsellor"}};
+const RT={admin:["over","risk","stu","seg","psy","al","qa","ins","log","sv","opp","fbi"],faculty:["over","risk","stu","seg","al","ins","opp","fbi"],counsellor:["al","stu","psy","qa","fbi"],student:["me","opp","fb","sv"]};
+let ROLE=null,UNAME="",UID="";
+const isCn=()=>ROLE=="counsellor"||(ROLE=="admin"&&$("#alr").value=="Counsellor");
+const fl=o=>isCn()?[...o.ar,...o.pr,...o.sr]:[...o.ar,...o.pr,...(o.sr.length?["Wellbeing support suggested"]:[])];
+function signIn(u,p){u=u.trim();const k=u.toLowerCase();if(USERS[k]&&USERS[k].p===p)return{role:USERS[k].role,name:USERS[k].name,id:""};if(/^S\d{4}$/i.test(u)&&p==="1234")return{role:"student",name:"Student "+u.toUpperCase(),id:u.toUpperCase()};return null}
+function loadSample(){const F=sample();route(Object.entries(F).map(([n,r])=>({name:n+".csv",rows:r.map(x=>Object.fromEntries(Object.entries(x).map(([k,v])=>[k,String(v)])))})));go()}
+function enter(r){ROLE=r.role;UNAME=r.name;UID=r.id;try{sessionStorage.setItem("lun",JSON.stringify(r))}catch(e){}
+ document.body.className="r-"+ROLE;$("#login").classList.add("hide");$("#shell").classList.remove("hide");$("#who").textContent=UNAME;$("#rolep").textContent=ROLE;$("#dsetup").classList.toggle("hide",ROLE!="admin");loadSaved();loadFB();loadSample();buildTabs()}
+function buildTabs(){const list=RT[ROLE],nm=Object.fromEntries(TABS);$("#tabs").innerHTML=list.map(k=>`<button data-t="${k}">${ROLE=="student"?({me:"Progress",opp:"Explore",fb:"Feedback",sv:"Check-in"})[k]:nm[k]}</button>`).join("");
+ document.querySelectorAll("#tabs [data-t]").forEach(b=>b.onclick=()=>showTab(b.dataset.t));showTab(ROLE=="counsellor"?"al":ROLE=="student"?"me":"over");$("#lfab").classList.remove("hide")}
+function showTab(k){document.querySelectorAll("#tabs [data-t]").forEach(x=>x.classList.toggle("on",x.dataset.t==k));TABS.forEach(t=>$("#p-"+t[0]).classList.toggle("hide",t[0]!=k));window.scrollTo({top:0});if(k=="fbi")renderFbi();if(k=="fb")renderFb()}
+// ---------- Lunala: staff copilot
+const LM=[];
+const nameOf=id=>{const r=RES.find(x=>x.student_id==id);return r?r.nm:id},lvc=l=>AL.filter(a=>a.lv==l),rs=a=>[...new Set(a.P.map(x=>isCn()?x.t:x.g))];
+function decliners(){return Object.entries(WK).map(([id,a])=>{if(a.length<6)return null;const at=a.map(x=>x.a),d=avg(at.slice(0,3))-avg(at.slice(-3));return d>=15?{id,d,r:avg(at.slice(-3))}:null}).filter(Boolean).sort((x,y)=>y.d-x.d)}
+function briefTxt(){const u=lvc("Urgent"),h=lvc("High"),w=lvc("Watch"),dec=decliners(),top=AL.filter(a=>a.lv!="Watch").slice(0,3);
+ let t=`Here is your briefing.\n- ${u.length} urgent, ${h.length} high and ${w.length} watch alerts.\n- ${dec.length} students show a sharp attendance decline.`;
+ const nf=fbVisible().filter(x=>x.status=="New").length;if(nf)t+=`\n- ${nf} new item${nf>1?"s":""} in the feedback inbox.`;
+ if(top.length)t+=`\n\nStart with:\n`+top.map((a,i)=>`${i+1}. ${a.nm} (${a.id}): ${rs(a)[0]}`).join("\n");
+ return t+`\n\nTip: a short, private, friendly check-in works best. Do not mention scores or surveys.`}
+function levelTxt(l){const a=lvc(l);if(!a.length)return `No ${l} alerts right now.`;return `${a.length} ${l} alert(s). Top ${Math.min(6,a.length)}:\n`+a.slice(0,6).map(x=>`- ${x.nm} (${x.id}): ${rs(x).slice(0,2).join("; ")}`).join("\n")+`\n\nNext step: ${NS[l]}`}
+function explainTxt(id){const a=AL.find(x=>x.id==id);if(!a){const r=RES.find(x=>x.student_id==id);return r?`${r.nm} (${id}) has no active alert. Success Score ${r.score.toFixed(0)} (${r.band} risk). Biggest drag: ${r.drag}.`:`I could not find ${id}.`}
+ return `${a.nm} (${id}) is a ${a.lv} alert, routed to ${a.route}.\nWhy:\n`+rs(a).map(x=>"- "+x).join("\n")+(a.note?`\n\nNote: ${a.note}`:"")+`\n\nNext step: ${NS[a.lv]}`}
+function deptTxt(){const ds=[...new Set(RES.map(o=>o.dept))],x=ds.map(d=>{const m=RES.filter(o=>o.dept==d),n=AL.filter(a=>(RES.find(o=>o.student_id==a.id)||{}).dept==d).length;return{d,n,p:n/m.length,s:avg(m.map(o=>o.score))}}).sort((a,b)=>b.p-a.p);return "Alert share by department:\n"+x.map(y=>`- ${y.d}: ${(y.p*100).toFixed(0)}% of students (${y.n}), average score ${y.s.toFixed(0)}`).join("\n")+`\n\n${x[0].d} needs the most attention.`}
+const segTxt=()=>SEG.length?SEG.map(s=>`- ${s.n}: ${s.c} students, avg score ${s.s.toFixed(0)}. Action: ${s.a}`).join("\n"):"No segments yet.";
+function gapTxt(){const g=RES.filter(r=>r.ind.Academic>=75&&r.ind.Placement<55);return `${g.length} students (${(g.length/RES.length*100).toFixed(0)}%) are strong academically but weak in placement readiness. Suggest aptitude and mock-interview training. Examples: ${g.slice(0,4).map(r=>r.nm).join(", ")}.`}
+function psyTxt(){if(!SV.length)return "No check-in data yet.";const f=STAT.wb.fl,p=STAT.ps.fl;if(!isCn())return `${SV.length} check-ins are in. In aggregate ${(f*100).toFixed(0)}% show low wellbeing and ${(p*100).toFixed(0)}% high stress. Individual answers are private to counsellors.`;return `Cohort check-in summary (${SV.length} responses):\n`+SCL.filter(s=>STAT[s.k]&&STAT[s.k].m!=null).map(s=>`- ${s.n}: mean ${STAT[s.k].m.toFixed(0)}, ${(STAT[s.k].fl*100).toFixed(0)}% flagged`).join("\n")}
+const draftTxt=id=>`Hi${/^Student \d+$/.test(nameOf(id))?"":" "+nameOf(id).split(" ")[0]}, I realised we have not caught up for a while and wanted to check in. No pressure at all: how are things going? If you would like a quiet chat, I am happy to find a time that suits you.\n\n(Keep it private and friendly. Do not mention scores, alerts or the survey.)`;
+const lctx=()=>`Role: ${ROLE}. Students: ${RES.length}. Alerts: Urgent ${lvc("Urgent").length}, High ${lvc("High").length}, Watch ${lvc("Watch").length}. Top alerts:\n`+AL.slice(0,8).map(a=>`- ${a.nm} (${a.id}) ${a.lv}: ${rs(a).slice(0,2).join("; ")}`).join("\n")+`\nSegments:\n`+SEG.map(s=>`- ${s.n}: ${s.c}`).join("\n")+`\nInsights:\n`+insights().map(x=>"- "+x).join("\n");
+async function aiAsk(q){let sm=null;try{sm=typeof claude!=="undefined"?await claude.use("sample"):null}catch(e){}if(!sm)return false;
+ const hist=LM.slice(-8).map(m=>(m.w=="u"?"User: ":"Lunala: ")+m.t).join("\n");LM.push({w:"l",t:"..."});drawL();
+ const p=`You are Lunala, a warm, concise early-support copilot for college staff. Answer only from the data below. Never diagnose, label or speculate about causes. ${ROLE=="faculty"?"The user is faculty: never reveal survey answers or psychometric details. ":""}Suggest humane, private next steps. Keep answers under 120 words.\n\nDATA\n${lctx()}\n\nCONVERSATION\n${hist}`;
+ try{const r=await sm(p,{modelTier:"quick",cache:false,onText:x=>{LM[LM.length-1].t=x.text;drawL()}});LM[LM.length-1].t=r.text}catch(e){LM[LM.length-1].t=e.code=="not_granted"?"Permission to use AI was declined, so I will stay in offline mode.":"I could not reach the AI service just now."}drawL();return true}
+async function lAsk(q){q=q.trim();if(!q)return;lSay("u",q);const t=q.toLowerCase(),m=q.match(/S\d{4}/i),id=m?m[0].toUpperCase():null;let r=null;
+ if(/^(hi|hello|hey)\b/.test(t))r="Hello! Ask me for a briefing, an explanation of any alert, or a draft check-in message.";
+ else if(/help|what can you/.test(t))r="I can brief you for today, list urgent/high/watch alerts, explain why a student was flagged (try S1005), find falling attendance, compare departments, summarise segments and check-in results, and draft a caring check-in message.";
+ else if(id&&/draft|message|write|email/.test(t))r=draftTxt(id);else if(id)r=explainTxt(id);
+ else if(/brief|today|first|priorit|attention|start/.test(t))r=briefTxt();
+ else if(/urgent|crisis|emergency/.test(t))r=levelTxt("Urgent");else if(/\bhigh\b/.test(t))r=levelTxt("High");else if(/watch/.test(t))r=levelTxt("Watch");
+ else if(/declin|drop|attendance|absen/.test(t)){const d=decliners();r=d.length?`${d.length} students show a sharp attendance decline. Biggest drops:\n`+d.slice(0,6).map(x=>`- ${nameOf(x.id)} (${x.id}): down ${x.d.toFixed(0)} points, now ${x.r.toFixed(0)}%`).join("\n"):"No sharp attendance declines found."}
+ else if(/depart|dept|branch/.test(t))r=deptTxt();else if(/segment|group|cluster/.test(t))r=segTxt();else if(/placement|gap|job/.test(t))r=gapTxt();
+ else if(/stress|wellbeing|lonel|anxi|mood|survey|check-?in/.test(t))r=psyTxt();else if(/insight|finding|trend/.test(t))r=insights().map(x=>"- "+x).join("\n");
+ if(r==null){if(await aiAsk(q))return;r="I am not sure about that one. Try: \"Brief me for today\", \"Show urgent cases\", \"Why was S1005 flagged?\" or \"Which department needs the most help?\""}
+ await new Promise(z=>setTimeout(z,350));lSay("l",r)}
+function lunInit(){if(ROLE=="student")return;if(!LM.length){const h=new Date().getHours();LM.push({w:"l",t:`${h<12?"Good morning":h<17?"Good afternoon":"Good evening"}, ${UNAME}. I'm Lunala, your early-support copilot. I watch attendance, LMS activity, check-ins and academics, and I tell you who may need a friendly conversation before it is too late. Ask me anything about your students, or tap a suggestion.`})}
+ const f=AL[0],ch=["Brief me for today","Who needs attention first?","Show urgent cases","Which students have dropping attendance?","Which department needs the most help?",...(f?[`Why was ${f.id} flagged?`,`Draft a check-in message for ${f.id}`]:[])];
+ setChips(ch.map(c=>[c,()=>lAsk(c)]));$("#pmode").textContent=typeof claude!=="undefined"?"AI mode available for open questions":"Offline mode: your data never leaves this browser";drawL()}
+function renderBrief(){const e=$("#lbrief");if(!ROLE||ROLE=="student"||!RES.length){e.classList.add("hide");return}
+ e.classList.remove("hide");e.innerHTML=`<div class="row">${AVT}<div style="flex:1;min-width:220px"><b>Lunala's briefing</b><div class="mut">${lvc("Urgent").length} urgent, ${lvc("High").length} high and ${lvc("Watch").length} watch alerts today. ${decliners().length} students show a sharp attendance decline. Early outreach works best in the next few days.</div></div><button class="btn p" id="lbb">Ask Lunala</button></div>`;$("#lbb").onclick=openPop}
+// ---------- Lunala: student check-in (chat style)
+function svLog(w,t){SVY.log.push({w,t})}
+function svDraw(opts){opts=opts||[];$("#svb").innerHTML=`<div class="card"><div class="lhead"><span class="av logo" data-s="40">${LOGO(40)}</span><div><b>Check-in with Lunala</b><div class="mut">Voluntary and private</div></div></div><div class="chat" id="svm">${SVY.log.map(m=>`<div class="mb ${m.w}">${m.w=="l"?AVT:""}<div class="bb">${esc(m.t).replace(/\n/g,"<br>")}</div></div>`).join("")}</div><div class="chips">${opts.map((o,i)=>`<button class="chip" data-o="${i}">${esc(o[1])}</button>`).join("")}</div></div>`;
+ const m=$("#svm");m.scrollTop=m.scrollHeight;document.querySelectorAll("#svb [data-o]").forEach(x=>x.onclick=()=>opts[+x.dataset.o][2]())}
+function svFresh(id){SVY={id,i:0,a:{},t0:0,q:[...QS,SHQ],log:[],ad:0}}
+function svInit(){svFresh(UID);if(ROLE!="student"){$("#svb").innerHTML=`<div class="card"><h2>Try the Lunala check-in</h2><div class="row"><label>Student ID</label><input id="svid" list="svl"><datalist id="svl">${BASE.slice(0,300).map(r=>`<option value="${esc(r.student_id)}">`).join("")}</datalist><button class="btn p" id="svgo">Start</button></div></div>`;$("#svgo").onclick=()=>{const v=$("#svid").value.trim();if(!v){alert("Enter a student ID");return}svFresh(v);svIntro()};return}svIntro()}
+function svIntro(){svLog("l","Hi, I'm Lunala, your campus wellbeing buddy. I would like to ask a few short questions about how you have been doing. It takes about 3 minutes.");
+ svLog("l","Before we start: this is voluntary, not a test, and not a diagnosis. You can skip any question. Your answers go to the college counsellor, never to your teachers or classmates. If your answers suggest you might be in danger, a counsellor will reach out to you. Is that okay?");
+ svDraw([[0,"Yes, let's start",()=>{svLog("u","Yes, let's start");SVY.t0=Date.now();svQ()}],[1,"Not now",()=>{svLog("u","Not now");svLog("l","No problem at all. You can come back whenever you like. Take care.");svDraw([[0,"Start over",()=>{const id=SVY.id;svFresh(id);svIntro()}]])}]])}
+function svQ(){const q=SVY.q[SVY.i];if(!q){svEnd();return}
+ if(SVY.i==QS.length&&!SVY.ad){SVY.ad=1;const a=SVY.a,wb=avg(["w1","w2","w3","w4","w5"].map(k=>a[k]).filter(x=>x!=null))/5*100,lo=(avg(["u1","u2","u3"].map(k=>a[k]).filter(x=>x!=null))-1)/2*100;if(wb<52||lo>=50){SVY.q.splice(QS.length,0,...SUQ);svLog("l","Thank you. I would like to ask two quick questions about the support around you.")}return svQ()}
+ if(q[3])svLog("l",q[3]);svLog("l",q[2]);svDraw([...OPT[q[1]].map(o=>[o[0],o[1],()=>svAns(q,o[0],o[1])]),["x","Prefer not to say",()=>svAns(q,"x","Prefer not to say")]])}
+function svAns(q,v,label){svLog("u",label);if(v!="x")SVY.a[q[0]]=+v;SVY.i++;const k=q[0],a=SVY.a;
+ if(k=="w5"){const wb=avg(["w1","w2","w3","w4","w5"].map(x=>a[x]).filter(x=>x!=null))/5*100;svLog("l",wb<52?"Thank you for being honest. Some weeks are heavy, and you are not alone in that.":"Good to hear. Let's keep going.")}
+ if(k=="q2"&&((a.q1||0)+(a.q2||0))>=3)svLog("l","Thanks for sharing that. It takes courage, and it helps me understand how to support you.");
+ if(k=="sh"&&+v>0){svLog("l","Thank you for telling me. You do not have to go through this alone. A counsellor will reach out to you soon, and you can talk to someone right now:\n"+HELP);svDraw([[0,"Continue",svQ]]);return}svQ()}
+function svEnd(){svLog("l","That's everything. Thank you for taking the time. What would you like me to do with your answers?");
+ svDraw([[0,"Save and ask a counsellor to reach out",()=>svSave(1)],[1,"Save my answers",()=>svSave(0)],[2,"Discard my answers",()=>{svLog("u","Discard my answers");svLog("l","Done. Nothing was saved. Take care of yourself.");svDraw([[0,"Start over",()=>{const id=SVY.id;svFresh(id);svIntro()}]])}]])}
+function svSave(ref){svLog("u",ref?"Save and ask a counsellor to reach out":"Save my answers");const id=SVY.id,a=SVY.a,n=[...SURVRAW,...LIVE].filter(r=>r.student_id==id).length;
+ LIVE.push({...a,student_id:id,wave:n+1,seconds:Math.round((Date.now()-SVY.t0)/1000),sh:a.sh??0,ref});recalc();renderBrief();
+ const tips=[];if(a.w4!=null&&a.w4<=2)tips.push("a steady sleep time this week");if((a.u1||0)>=2||(a.u2||0)>=2)tips.push("joining one club or study group that interests you");if((a.p1||0)>=3)tips.push("a 5-minute breathing break between classes");
+ svLog("l","Saved. Thank you for trusting me."+(tips.length?" Small things that may help: "+tips.join(", ")+".":"")+(ref?" A counsellor will contact you soon.":"")+"\nIf things ever feel too heavy, Tele-MANAS (14416) is free and open 24x7.");
+ svDraw([[0,"Add another check-in",()=>{svFresh(id);svIntro()}]])}
+// ---------- popup chat (staff copilot + student navigator)
+let POP=false;const NM=[];
+const NAVQ=["Show my progress","Upcoming hackathons","Start my check-in","Who sees my answers?","Talk to a counsellor","I need help now"];
+const popLog=()=>ROLE=="student"?NM:LM;
+function drawL(){const b=$("#pmsg");if(!b)return;b.innerHTML=popLog().map(m=>`<div class="mb ${m.w}">${m.w=="l"?AVT:""}<div class="bb">${esc(m.t).replace(/\n/g,"<br>")}</div></div>`).join("");b.scrollTop=b.scrollHeight}
+function lSay(w,t){LM.push({w,t});drawL()}
+function setChips(l){const c=$("#pchips");c.innerHTML=l.map((x,i)=>`<button class="chip" data-c="${i}">${esc(x[0])}</button>`).join("");c.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>l[+b.dataset.c][1]())}
+function openPop(){POP=true;$("#lpop").classList.remove("hide");if(ROLE=="student")navInit();else lunInit();$("#pin").focus()}
+function closePop(){POP=false;$("#lpop").classList.add("hide")}
+function nSay(t,acts){NM.push({w:"l",t});drawL();setChips(acts||NAVQ.map(q=>[q,()=>nAsk(q)]))}
+function nUser(t){NM.push({w:"u",t});drawL()}
+function navInit(){if(!NM.length)NM.push({w:"l",t:"Hi, I'm Lunala, your guide to this platform. I can show you where things are, explain how your information is used, and connect you with a counsellor. What would you like to do?"});
+ setChips(NAVQ.map(q=>[q,()=>nAsk(q)]));$("#pmode").textContent="Your guide to this platform";drawL()}
+function nCrisis(){nSay("I'm really glad you told me. You deserve support right now. You can talk to someone straight away:\n"+HELP+"\nWould you like me to ask a college counsellor to contact you today?",
+ [["Yes, ask a counsellor to contact me today",()=>{nUser("Yes, ask a counsellor to contact me today");URG.add(UID);REQ.add(UID);recalc();renderBrief();nSay("Done. I've asked a counsellor to contact you today. You are not alone, and asking for help is okay. If you feel in danger right now, please call 112 or Tele-MANAS 14416.")}],
+ ["Not right now",()=>{nUser("Not right now");nSay("That's okay. The helplines above are always there, and I'm here whenever you want help finding support.")}]])}
+function nReq(){nSay("I can ask a college counsellor to reach out to you privately. Your teachers will only get a gentle \"please check in\" note, never your answers. Shall I do that?",
+ [["Yes, ask a counsellor to reach out",()=>{nUser("Yes, ask a counsellor to reach out");REQ.add(UID);recalc();renderBrief();nSay("Done. A counsellor will reach out to you soon. If you need someone sooner: "+HELP)}],
+ ["No, thanks",()=>{nUser("No, thanks");nSay("No problem. You can ask me again any time.")}]])}
+const toCheckin=()=>{closePop();$("#svb").scrollIntoView({behavior:"smooth"})};
+function nAsk(q){q=q.trim();if(!q)return;nUser(q);const t=q.toLowerCase(),D=NAVQ.map(x=>[x,()=>nAsk(x)]);
+ if(/\bdie\b|suicid|kill myself|end my life|hurt myself|self.?harm|can.?t go on|no reason to live|disappear|help now|emergency|crisis|in danger/.test(t))return setTimeout(nCrisis,250);
+ let r,a=null;
+ if(/^(hi|hello|hey)\b/.test(t))r="Hello! I can guide you around this platform. Tap a suggestion or type a question.";
+ else if(/thank/.test(t))r="You're welcome. I'm here whenever you need me.";
+ else if(/suggest|complain|feedback|grievance|ragging|harass|\bidea\b/.test(t)){r=/ragg|harass|abus|unsafe|threat/.test(t)?"I'm sorry you're dealing with that. You can report it in the Complaint box, anonymously if you prefer. Tick \"This affects my safety or wellbeing\" so it goes to the counsellor. If you are in danger now: "+HELP:"You can share an idea in the Suggestion box or raise a concern in the Complaint box. Both can be anonymous, and you get a reference code to track the response.";a=[["Open the box",()=>{closePop();showTab("fb")}],...D.slice(2)]}
+ else if(/result|report|my data|my info|risk|zone/.test(t))r="Your own progress (attendance, LMS, grades and skills) is in My progress. Some planning tools are used by counsellors to offer support, and I can't show those here. If you would like to talk through how you are doing, I can ask a counsellor to reach out.";
+ else if(/who.*see|privacy|private|confiden|share|teacher|friends|classmate/.test(t))r="Your answers go to the college counsellor only. Teachers never see your answers; they only get a gentle \"please check in\" note if support might help. Your data is used to offer support, never for marks, discipline or ranking. In this demo, everything stays in your browser.";
+ else if(/faculty|teacher|professor|office hours|free now|who.?s free|who is free/.test(t)){r=nFac();a=[["See availability",()=>{closePop();showTab("me");setTimeout(()=>{const e=$("#fac");if(e)e.scrollIntoView({behavior:"smooth"})},150)}],...D.slice(2)]}
+ else if(/counsel|talk to|speak to|someone|therapist|mentor|reach out/.test(t))return nReq();
+ else if(/delete|remove|discard|forget/.test(t))r="At the end of a check-in you can choose \"Discard my answers\". In this demo, answers also disappear when you close or refresh the page. In a real deployment, ask the counsellor or administrator to delete your data.";
+ else if(/skip|uncomfortable|don.?t want|mandatory|compulsory|have to|forced/.test(t))r="The check-in is completely voluntary. You can skip any question with \"Prefer not to say\", skip the whole thing, or discard your answers at the end. Nothing happens to your marks either way.";
+ else if(/\b(hackathons?|events?|workshops?|fests?|competitions?|opportunit\w*|upcoming|clubs?)\b/.test(t)){r=nEvents(t);a=[["Open opportunities",()=>{closePop();showTab("opp")}],...D.slice(2)]}
+ else if(/progress|attendance|\blms\b|assignment|cgpa|how am i doing|my marks|grades/.test(t)){r=nProg();a=[["Open my progress",()=>{closePop();showTab("me")}],...D.slice(1)]}
+ else if(/check.?in|survey|question|start|begin|take|how long|minutes/.test(t)){r="The check-in has about 25 short questions and takes around 3 minutes. It asks how you have been feeling lately and how connected you feel. It is voluntary and private.";a=[["Take me to the check-in",toCheckin],...D.slice(2)]}
+ else if(/stress|anxi|sad|lonely|depress|overwhelm|tired|exam|worried|bullied|fail|upset|angry/.test(t)){r="I'm sorry things feel heavy. I'm a guide, not a counsellor, so I can't advise you on this, but a counsellor can. I can ask one to reach out, or you can take the short check-in so the college knows how to support you.";a=[["Ask a counsellor to reach out",()=>{nUser("Ask a counsellor to reach out");nReq()}],["Take me to the check-in",toCheckin],["I need help now",()=>nAsk("I need help now")]]}
+ else if(/what can|what is|what does|how does|about|help|use this|navigate|where|guide/.test(t))r="Here is what you can do on this platform:\n- Take a short wellbeing check-in (voluntary, about 3 minutes)\n- Ask a counsellor to reach out privately\n- Find out who sees your answers\n- Get helpline numbers any time\nI can't give medical or counselling advice, but I will always point you to someone who can.";
+ else r="I can help you find your way around: the check-in, privacy, and getting in touch with a counsellor. For anything personal, a counsellor is the right person, and I can ask one to reach out.";
+ setTimeout(()=>nSay(r,a||D),300)}
+// ---------- student home: progress without risk labels
+const ATT_TARGET=75,fx=(v,d=0)=>v==null||isNaN(v)?"-":(+v).toFixed(d);
+function nProg(){const r=BASE.find(x=>x.student_id==UID);if(!r)return "I couldn't find your records yet.";const w=WK[UID]||[],l=w[w.length-1];
+ return `Here's a quick look:\n- Attendance: ${fx(r.overall_pct)}%${l?` (this week ${fx(l.a)}%)`:""}\n- LMS: ${fx(r.logins_per_week,1)} logins a week, ${fx(r.assignment_completion_pct)}% of assignments done\n- CGPA: ${fx(r.cgpa,2)}\nOpen My progress for the full picture.`}
+function renderMe(){const el=$("#meb");if(!el)return;if(ROLE!="student"){el.innerHTML="";return}
+ const r=BASE.find(x=>x.student_id==UID),w=WK[UID]||[];
+ if(!r){el.innerHTML=`<div class="card"><h2>Welcome</h2><p class="mut">We could not find your records yet. You can still take the optional check-in or ask Lunala for help.</p></div>`;return}
+ const att=r.overall_pct,last=w[w.length-1],prev=w.length>1?w[w.length-2]:null,dA=last&&prev?last.a-prev.a:null,dL=last&&prev?last.l-prev.l:null;
+ const mv=(d,u)=>d==null?"":d>=1?`<span class="up">up ${fx(d)}${u}</span>`:d<=-1?`<span class="dn">down ${fx(Math.abs(d))}${u}</span>`:"steady";
+ const spark=w.length>1?`<svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%;height:48px;margin-top:6px"><polyline fill="none" stroke="var(--acc)" stroke-width="2.5" vector-effect="non-scaling-stroke" points="${w.map((x,i)=>`${i/(w.length-1)*100},${40-x.a/100*38}`).join(" ")}"/></svg><div class="mut" style="font-size:12px">Weekly attendance, last ${w.length} weeks</div>`:"";
+ const gap=att>=ATT_TARGET?`You are ${fx(att-ATT_TARGET)} points above the ${ATT_TARGET}% target. Keep it up.`:`You are ${fx(ATT_TARGET-att)} points from the ${ATT_TARGET}% target. Every class you attend moves you closer.`;
+ const meter=(l,v)=>`<div class="row" style="justify-content:space-between;margin-top:8px"><span>${l}</span><b>${fx(v)}</b></div><div class="meter"><i style="width:${Math.max(2,Math.min(100,v))}%"></i></div>`;
+ const tips=[];if(att<ATT_TARGET)tips.push("Aim to attend every class this week to close the attendance gap.");if(r.assignment_completion_pct<70)tips.push("Finish one pending assignment today.");if(last&&last.l<3)tips.push("Log into the LMS three times this week to stay on top of materials.");if(r.coding!=null&&r.coding<60)tips.push("Try two practice coding problems.");if(r.clubs===0)tips.push("Join one club that interests you.");if(!tips.length)tips.push("You are on a great track. Pick one new skill to try this week.");
+ const upd=[];if(last)upd.push(`Attendance this week is ${fx(last.a)}%${dA!=null?" ("+mv(dA," points")+" from last week)":""}.`);if(last)upd.push(`LMS: ${fx(last.l,1)} logins this week${dL!=null?" ("+mv(dL,"")+" from last week)":""}.`);
+ upd.push(`${fx(r.assignment_completion_pct)}% of your assignments are complete.`);if(r.certifications>0)upd.push(`You have earned ${fx(r.certifications)} certification${r.certifications>1?"s":""}. Nice work.`);
+ const mine=[...SURVRAW,...LIVE].filter(x=>x.student_id==UID).length;upd.push(mine?"Thanks for your check-in. You can add another any time.":"Optional: a 3-minute check-in with Lunala is waiting whenever you like.");
+ const rows=oppRows(),opn=rows.filter(e=>!e.dl||daysTo(e.dl)>=0),hk=opn.filter(e=>e.type=="Hackathon"),cl=opn.filter(e=>e.dl&&daysTo(e.dl)<=3).sort((a,b)=>a.dl-b.dl)[0],sv=rows.filter(e=>SAVED.has(evKey(e))).slice(0,3),coming=sv.length?sv:opn.slice(0,3);
+ if(hk.length)upd.unshift(`${hk.length} hackathon${hk.length>1?"s are":" is"} open for registration. <a href="#" id="gopp">See opportunities</a>`);
+ if(cl)upd.unshift(`Registration for <b>${esc(cl.title)}</b> closes ${daysTo(cl.dl)==0?"today":"in "+daysTo(cl.dl)+" day"+(daysTo(cl.dl)>1?"s":"")}.`);
+ const cc=`<div class="card"><h2>${sv.length?"Your saved events":"Coming up"}</h2>${coming.map(e=>`<div class="upd"><span class="dot"></span><div><b>${esc(e.title)}</b><div class="mut">${esc(e.host)} · ${fmtD(e.d)} (in ${daysTo(e.d)} days)</div></div></div>`).join("")||'<div class="mut">No upcoming events yet.</div>'}<button class="btn" id="gopp2" style="margin-top:8px">See all opportunities</button></div>`;
+ const first=/^Student \d+$/.test(r.name||"")?"":(r.name||"").split(" ")[0];
+ el.innerHTML=`<div style="margin-top:6px"><h2 style="font-size:22px;margin:0">Hi${first?", "+esc(first):" there"}</h2><div class="mut">Your progress, updated ${new Date().toLocaleDateString(undefined,{day:"numeric",month:"short"})}</div></div>
+ <div class="me"><div class="card"><h2>Attendance</h2><div class="bigm">${fx(att)}%</div><div class="meter" style="margin-top:8px"><i style="width:${att}%"></i><u style="left:${ATT_TARGET}%"></u></div><div class="mut" style="margin-top:6px">${gap}</div>${spark}</div>
+ <div class="card"><h2>This week's focus</h2>${tips.slice(0,3).map(t=>`<div class="upd"><span class="dot"></span><div>${esc(t)}</div></div>`).join("")}</div>
+ <div class="card"><h2>Updates</h2>${upd.map(t=>`<div class="upd"><span class="dot"></span><div>${t}</div></div>`).join("")}</div>
+ ${facCard()}<div class="card"><h2>Learning (LMS)</h2>${meter("Assignments completed",r.assignment_completion_pct)}${meter("Logins per week (out of 10)",Math.min(r.logins_per_week,10)*10)}</div>
+ <div class="card"><h2>Academics</h2><div class="bigm">${fx(r.cgpa,2)}<span class="mut" style="font-size:14px"> CGPA</span></div><div class="meter" style="margin-top:8px"><i style="width:${r.cgpa*10}%"></i></div><div class="mut" style="margin-top:6px">${r.backlogs>0?fx(r.backlogs)+" backlog(s) to clear. You can do this.":"No backlogs. Well done."}</div></div>
+ <div class="card"><h2>Skills</h2>${["aptitude","coding","mock_interview"].filter(k=>COLS.has(k)).map(k=>meter(k.replace("_"," ").replace(/^./,c=>c.toUpperCase()),r[k])).join("")}${r.technical_skill?`<div style="margin-top:10px"><span class="badge">Technical level: ${esc(r.technical_skill)}</span></div>`:""}</div>
+ <div class="card"><h2>Activities</h2><div>${[["events","Events"],["clubs","Clubs"],["hackathons","Hackathons"],["certifications","Certifications"]].filter(x=>COLS.has(x[0])).map(x=>`<span class="badge"><b>${fx(r[x[0]])}</b> ${x[1]}</span>`).join("")}</div></div>
+ ${cc}<div class="card"><h2>Optional check-in</h2><p class="mut">A 3-minute private chat with Lunala about how you are doing. Voluntary, and you can skip any question.</p><button class="btn p" id="mci">Start check-in</button></div></div>`;
+ $("#mci").onclick=()=>showTab("sv");const g1=$("#gopp"),g2=$("#gopp2");if(g1)g1.onclick=e=>{e.preventDefault();showTab("opp")};if(g2)g2.onclick=()=>showTab("opp");bindFac()}
+// ---------- opportunities: hackathons, events, drives, clubs
+let EVENTS=[],SAVED=new Set(),OF={t:"All",q:"",s:false};
+const TD=()=>{const d=new Date();d.setHours(0,0,0,0);return d},dd=s=>{const d=new Date(String(s).trim()+"T00:00:00");return isNaN(d)?null:d},daysTo=d=>Math.round((d-TD())/864e5),fmtD=d=>d.toLocaleDateString(undefined,{day:"numeric",month:"short"}),evKey=e=>e.title+"|"+e.date;
+function loadSaved(){try{SAVED=new Set(JSON.parse(localStorage.getItem("lun_sv_"+(UID||ROLE))||"[]"))}catch(e){SAVED=new Set()}}
+function saveSaved(){try{localStorage.setItem("lun_sv_"+(UID||ROLE),JSON.stringify([...SAVED]))}catch(e){}}
+function oppRows(){return EVENTS.map((e,i)=>({...e,i,d:dd(e.date),dl:e.deadline?dd(e.deadline):null})).filter(e=>e.d&&daysTo(e.d)>=0).sort((a,b)=>a.d-b.d)}
+function recs(rows){const r=BASE.find(x=>x.student_id==UID);if(!r)return[];const o=[];rows.forEach(e=>{let s=0,why="";const sk=(e.skills||"").toLowerCase();
+ if(sk.includes("coding")&&r.coding!=null&&r.coding<70){s+=3;why="Build your coding skills"}
+ if(e.type=="Club"&&r.clubs===0){s+=3;why="Meet people who share your interests"}
+ if(e.type=="Hackathon"&&r.hackathons===0){s+=3;why="A friendly first hackathon"}
+ if(e.type=="Placement"&&r.mock_interview!=null&&r.mock_interview<70){s+=3;why="Practice for interviews"}
+ if(e.type=="Workshop"&&r.certifications===0){s+=2;why="Earn your first certificate"}
+ if(sk.includes("teamwork")&&r.soft_skill_score!=null&&r.soft_skill_score<70){s+=1;why=why||"Strengthen teamwork"}
+ if(s>0)o.push({e,s,why})});return o.sort((a,b)=>b.s-a.s||a.e.d-b.e.d).slice(0,3)}
+function evCard(e,why){const sv=SAVED.has(evKey(e)),dl=e.dl?daysTo(e.dl):null,dt=daysTo(e.d);
+ return `<div class="card ev"><span class="evt ${esc(e.type)}">${esc(e.type)}</span><h3>${esc(e.title)}</h3><div class="mut">Hosted by ${esc(e.host)}</div>
+ <div>${fmtD(e.d)} · ${dt==0?"today":"in "+dt+" day"+(dt>1?"s":"")}${e.mode?" · "+esc(e.mode):""}${e.location?", "+esc(e.location):""}</div>
+ ${why?`<div class="up">Why this: ${esc(why)}</div>`:""}${e.description?`<div class="mut">${esc(e.description)}</div>`:""}
+ ${(e.team_size||e.prize)?`<div class="mut">${e.team_size?"Team size "+esc(e.team_size)+". ":""}${esc(e.prize||"")}</div>`:""}
+ <div>${(e.skills||"").split(";").filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div>
+ ${dl!=null?`<div class="${dl>=0&&dl<=3?"soon":"mut"}">${dl<0?"Registration closed":dl==0?"Registration closes today":"Register within "+dl+" day"+(dl>1?"s":"")}</div>`:""}
+ <div class="row">${/^https?:/.test(e.link||"")?`<a class="btn p" href="${esc(e.link)}" target="_blank" rel="noopener">Register</a>`:""}<button class="btn ${sv?"p":""}" data-sv="${e.i}">${sv?"Saved":"Save"}</button><button class="btn" data-ics="${e.i}">Add to calendar</button></div></div>`}
+function ics(e){const f=d=>d.toISOString().slice(0,10).replace(/-/g,""),x=t=>String(t||"").replace(/[,;]/g,"\\$&").replace(/\n/g," "),n=new Date(e.d.getTime()+864e5);
+ dl(e.title.replace(/\W+/g,"_")+".ics",`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Lunala//EN\r\nBEGIN:VEVENT\r\nUID:${evKey(e).replace(/\W+/g,"")}@lunala\r\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g,"").slice(0,15)}Z\r\nDTSTART;VALUE=DATE:${f(e.d)}\r\nDTEND;VALUE=DATE:${f(n)}\r\nSUMMARY:${x(e.title)}\r\nLOCATION:${x(e.location||e.mode)}\r\nDESCRIPTION:${x(e.description)}\r\nEND:VEVENT\r\nEND:VCALENDAR`,"text/calendar")}
+function renderOpp(){const el=$("#oppb");if(!el)return;const types=["All","Hackathon","Workshop","Placement","Club","Event"];
+ el.innerHTML=`<div style="margin-top:6px"><h2 style="font-size:22px;margin:0">Opportunities</h2><div class="mut">Hackathons, workshops, drives and clubs from universities and your campus.${ROLE=="admin"?" Admins: add events by loading an events CSV (title, type, host, date, mode, location, deadline, link, skills, description).":""}</div></div>
+ <div class="chips">${types.map(t=>`<button class="chip ${OF.t==t?"on":""}" data-ft="${t}">${t=="All"?"All":t+"s"}</button>`).join("")}<button class="chip ${OF.s?"on":""}" id="fsv">Saved (${SAVED.size})</button></div>
+ <div class="row" style="margin-top:8px"><input id="fq" placeholder="Search events, hosts or skills" value="${esc(OF.q)}" style="flex:1"></div><div id="evl"></div>`;
+ el.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{OF.t=b.dataset.ft;renderOpp()});$("#fsv").onclick=()=>{OF.s=!OF.s;renderOpp()};$("#fq").oninput=e=>{OF.q=e.target.value;renderEvList()};renderEvList()}
+function renderEvList(){const el=$("#evl");let rows=oppRows();if(OF.s)rows=rows.filter(e=>SAVED.has(evKey(e)));if(OF.t!="All")rows=rows.filter(e=>e.type==OF.t);if(OF.q)rows=rows.filter(e=>(e.title+" "+e.host+" "+(e.skills||"")).toLowerCase().includes(OF.q.toLowerCase()));
+ const rc=ROLE=="student"&&OF.t=="All"&&!OF.q&&!OF.s?recs(oppRows()):[],rk=new Set(rc.map(x=>evKey(x.e)));
+ el.innerHTML=(rc.length?`<h2 style="margin-top:16px">Picked for you</h2><div class="me">${rc.map(x=>evCard(x.e,x.why)).join("")}</div>`:"")+`<h2 style="margin-top:16px">${OF.s?"Saved":"Upcoming"} (${rows.length})</h2>`+(rows.length?`<div class="me">${rows.map(e=>evCard(e)).join("")}</div>`:`<div class="card mut">Nothing here yet. Try another filter, or check back soon.</div>`);
+ el.querySelectorAll("[data-sv]").forEach(b=>b.onclick=()=>{const e=EVENTS[+b.dataset.sv],k=evKey(e);SAVED.has(k)?SAVED.delete(k):SAVED.add(k);saveSaved();renderOpp();renderMe()});
+ el.querySelectorAll("[data-ics]").forEach(b=>b.onclick=()=>ics(oppRows().find(x=>x.i==+b.dataset.ics)))}
+function nEvents(t){const ty=/hackathon/.test(t)?"Hackathon":/workshop/.test(t)?"Workshop":/club/.test(t)?"Club":/placement|drive/.test(t)?"Placement":null,rows=oppRows().filter(e=>!ty||e.type==ty).slice(0,3);
+ if(!rows.length)return `I couldn't find upcoming ${ty?ty.toLowerCase()+"s":"events"} yet. New ones are added regularly.`;return `Coming up${ty?" ("+ty.toLowerCase()+"s)":""}:\n`+rows.map(e=>`- ${e.title}, ${e.host}, ${fmtD(e.d)} (in ${daysTo(e.d)} days)`).join("\n")}
+// ---------- faculty availability
+let FAC=[],FS={day:"Now",time:"",dept:"All"};
+const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],tmn=s=>{const m=String(s||"").match(/(\d{1,2}):(\d{2})/);return m?+m[1]*60+ +m[2]:null},hm=n=>String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0");
+function facStatus(o){o=o||FS;const now=new Date(),nm=now.getHours()*60+now.getMinutes(),d=o.day=="Now"?now.getDay():DAYS.indexOf(o.day),m=o.day=="Now"?nm:(tmn(o.time)??nm),
+ rows=FAC.map(x=>({...x,dd:DAYS.indexOf(x.day),s:tmn(x.start),e:tmn(x.end)})).filter(x=>x.dd>=0&&x.s!=null&&x.e!=null&&(o.dept=="All"||x.department==o.dept)),free=[],next=[];
+ [...new Set(rows.map(x=>x.faculty))].forEach(n=>{const mine=rows.filter(x=>x.faculty==n),cur=mine.find(x=>x.dd==d&&x.s<=m&&m<x.e);if(cur){free.push({...cur,until:cur.e});return}
+  let best=null;mine.forEach(x=>{let t=((x.dd-d+7)%7)*1440+x.s-m;if(t<=0)t+=7*1440;if(!best||t<best.t)best={t,x}});if(best)next.push({...best.x,t:best.t})});
+ return{free:free.sort((a,b)=>a.until-b.until),next:next.sort((a,b)=>a.t-b.t)}}
+function facCard(){if(!FAC.length)return"";const depts=["All",...new Set(FAC.map(x=>x.department))];
+ return `<div class="card" id="fac"><h2>Faculty availability</h2><div class="row"><select id="fday">${["Now","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<option${x==FS.day?" selected":""}>${x}</option>`).join("")}</select><input type="time" id="ftm" value="${FS.time}" ${FS.day=="Now"?"disabled":""}><select id="fdept">${depts.map(x=>`<option${x==FS.dept?" selected":""}>${esc(x)}</option>`).join("")}</select></div><div id="facl" style="margin-top:8px"></div></div>`}
+function renderFac(){const el=$("#facl");if(!el)return;const s=facStatus(),ln=(x,t,c)=>`<div class="upd"><span class="dot" style="background:${c}"></span><div><b>${esc(x.faculty)}</b> <span class="mut">${esc(x.role)} · ${esc(x.department)}</span><div class="mut">${esc(x.room)} · ${t}</div></div></div>`;
+ el.innerHTML=(s.free.length?`<div class="up">${s.free.length} free ${FS.day=="Now"?"right now":"at this time"}</div>`+s.free.slice(0,5).map(x=>ln(x,"free until "+hm(x.until),"var(--ok)")).join(""):`<div class="dn">Nobody is free at this time.</div>`)+(s.free.length<3&&s.next.length?`<div class="mut" style="margin-top:8px">Next available</div>`+s.next.slice(0,3).map(x=>ln(x,DAYS[x.dd]+" at "+x.start,"var(--mut)")).join(""):"")}
+function bindFac(){const a=$("#fday");if(!a)return;a.onchange=()=>{FS.day=a.value;if(FS.day!="Now"&&!FS.time){const n=new Date();FS.time=hm(n.getHours()*60+n.getMinutes())}$("#ftm").disabled=FS.day=="Now";$("#ftm").value=FS.time;renderFac()};$("#ftm").onchange=e=>{FS.time=e.target.value;renderFac()};$("#fdept").onchange=e=>{FS.dept=e.target.value;renderFac()};renderFac()}
+function nFac(){if(!FAC.length)return "Faculty availability isn't set up yet.";const s=facStatus({day:"Now",dept:"All",time:""});return s.free.length?"Free right now:\n"+s.free.slice(0,4).map(x=>`- ${x.faculty} (${x.role}, ${x.department}), ${x.room}, until ${hm(x.until)}`).join("\n"):"Nobody is free right now. Next available:\n"+s.next.slice(0,3).map(x=>`- ${x.faculty}, ${DAYS[x.dd]} at ${x.start}, ${x.room}`).join("\n")}
+// ---------- suggestion + complaint box
+let FB=[],FT="Suggestion",FBD="",FQ={t:"All",s:"All"};
+const FBCAT={Suggestion:["Teaching and learning","Campus and facilities","Events and clubs","Placements","Platform and app","Other"],Complaint:["Academics or exams","Faculty or staff behaviour","Facilities or hostel","Safety, harassment or ragging","Fees or administration","Other"]};
+function loadFB(){try{FB=JSON.parse(localStorage.getItem("lun_fb")||"[]")}catch(e){FB=[]}}
+function saveFB(){try{localStorage.setItem("lun_fb",JSON.stringify(FB))}catch(e){}}
+const fbCode=()=>"FB-"+Math.random().toString(36).slice(2,6).toUpperCase()+Math.floor(Math.random()*90+10);
+const fbDate=x=>new Date(x.ts).toLocaleDateString(undefined,{day:"numeric",month:"short"});
+function fbItem(x,staff){return `<div class="upd"><span class="dot"></span><div style="flex:1"><b>${esc(x.type)}</b> · ${esc(x.cat)} <span class="badge">${esc(x.status)}</span>${x.pri?'<span class="badge">Priority</span>':""}<div class="mut">${esc(x.id)} · ${fbDate(x)}${staff?" · "+(x.anon?"Anonymous":esc(x.by||"Unknown")):""}</div><div style="margin:4px 0">${esc(x.text)}</div>${x.resp&&!staff?`<div class="tip"><b>Response:</b> ${esc(x.resp)}</div>`:""}</div></div>`}
+function renderFb(){const el=$("#fbb");if(!el)return;const mine=FB.filter(x=>x.by&&x.by==UID);
+ el.innerHTML=`<div style="margin-top:6px"><h2 style="font-size:22px;margin:0">Suggestion and complaint box</h2><div class="mut">Your voice shapes the campus. Share an idea or raise a concern. You can stay anonymous.</div></div>
+ <div class="chips"><button class="chip ${FT=="Suggestion"?"on":""}" data-t2="Suggestion">Suggestion</button><button class="chip ${FT=="Complaint"?"on":""}" data-t2="Complaint">Complaint</button></div>
+ <div class="card" style="margin-top:10px"><label class="mut">Category</label><select id="fbc" style="width:100%;margin:4px 0 10px">${FBCAT[FT].map(c=>`<option>${esc(c)}</option>`).join("")}</select><label class="mut">${FT=="Suggestion"?"Your idea":"What happened?"}</label><textarea id="fbt" rows="5" style="width:100%;margin-top:4px" placeholder="${FT=="Suggestion"?"Tell us what would make campus better...":"Describe the issue in your own words. Please do not share passwords or ID numbers."}">${esc(FBD)}</textarea>
+ <label class="row" style="margin-top:8px"><input type="checkbox" id="fba"> Submit anonymously (your name is not attached)</label>${FT=="Complaint"?`<label class="row"><input type="checkbox" id="fbs"> This affects my safety or wellbeing</label>`:""}
+ <div id="fbe" style="color:var(--bad);min-height:20px"></div><button class="btn p" id="fbsend">Submit ${FT.toLowerCase()}</button><div id="fbok"></div></div>
+ <div class="card"><h2>Track a submission</h2><div class="row"><input id="fbq" placeholder="Reference code, e.g. FB-AB12" style="flex:1"><button class="btn" id="fbtr">Check</button></div><div id="fbtrr" class="mut" style="margin-top:8px"></div></div>
+ ${mine.length?`<div class="card"><h2>My submissions</h2>${mine.slice().reverse().map(x=>fbItem(x)).join("")}</div>`:""}`;
+ el.querySelectorAll("[data-t2]").forEach(b=>b.onclick=()=>{FBD=$("#fbt").value;FT=b.dataset.t2;renderFb()});
+ $("#fbtr").onclick=()=>{const c=$("#fbq").value.trim().toUpperCase(),x=FB.find(f=>f.id==c);$("#fbtrr").innerHTML=x?fbItem(x):"No submission found for that code."};
+ $("#fbsend").onclick=()=>{const t=$("#fbt").value.trim();if(t.length<10){$("#fbe").textContent="Please write at least a sentence (10 characters).";return}
+  const an=$("#fba").checked,pri=FT=="Complaint"&&(($("#fbs")||{}).checked||/ragg|harass|abus|assault|threat|unsafe|bully|stalk/i.test(t)||$("#fbc").value.startsWith("Safety")),
+  rec={id:fbCode(),type:FT,cat:$("#fbc").value,text:t,anon:an,by:an?"":UID,ts:new Date().toISOString(),status:"New",resp:"",pri};FB.push(rec);saveFB();FBD="";renderFb();
+  $("#fbok").innerHTML=`<div class="tip"><b>Thank you.</b> Your ${rec.type.toLowerCase()} was sent. Your reference code is <b>${rec.id}</b>. Keep it to check the status${an?" (it is the only way to follow up on an anonymous submission)":""}.${pri?`<br>Because this may involve your safety, it was marked priority and shared with the counsellor. If you need help right now: ${HELP}`:""}</div>`}}
+const fbVisible=()=>FB.filter(x=>ROLE=="admin"||(ROLE=="counsellor"&&(x.pri||x.cat.startsWith("Safety")))||(ROLE=="faculty"&&x.type=="Suggestion"));
+function renderFbi(){const el=$("#fbi");if(!el)return;const all=fbVisible();let rows=all.filter(x=>(FQ.t=="All"||x.type==FQ.t)&&(FQ.s=="All"||x.status==FQ.s)).sort((a,b)=>(b.pri-a.pri)||((a.status=="New"?0:1)-(b.status=="New"?0:1))||b.ts.localeCompare(a.ts));
+ const scope=ROLE=="admin"?"All suggestions and complaints.":ROLE=="counsellor"?"Safety and wellbeing items only.":"Suggestions only. Complaints go to the administration.";
+ el.innerHTML=`<div style="margin-top:6px"><h2 style="font-size:22px;margin:0">Feedback inbox</h2><div class="mut">${scope} ${all.filter(x=>x.status=="New").length} new. Submissions live in this browser in the demo; a real deployment needs a database.</div></div>
+ <div class="chips">${["All","Suggestion","Complaint"].map(t=>`<button class="chip ${FQ.t==t?"on":""}" data-q1="${t}">${t}</button>`).join("")}${["All","New","In review","Resolved"].map(t=>`<button class="chip ${FQ.s==t?"on":""}" data-q2="${t}">${t=="All"?"Any status":t}</button>`).join("")}</div>
+ <div class="card">${rows.length?rows.map(x=>`${fbItem(x,1)}<div class="row" style="margin:0 0 10px 18px"><select data-st="${x.id}">${["New","In review","Resolved"].map(s=>`<option${s==x.status?" selected":""}>${s}</option>`).join("")}</select><input data-rp="${x.id}" placeholder="Write a response the student can see" value="${esc(x.resp)}" style="flex:1"><button class="btn" data-sv2="${x.id}">Save</button></div>`).join(""):'<div class="mut">Nothing here yet.</div>'}</div>`;
+ el.querySelectorAll("[data-q1]").forEach(b=>b.onclick=()=>{FQ.t=b.dataset.q1;renderFbi()});el.querySelectorAll("[data-q2]").forEach(b=>b.onclick=()=>{FQ.s=b.dataset.q2;renderFbi()});
+ el.querySelectorAll("[data-sv2]").forEach(b=>b.onclick=()=>{const x=FB.find(f=>f.id==b.dataset.sv2);x.status=el.querySelector(`[data-st="${x.id}"]`).value;x.resp=el.querySelector(`[data-rp="${x.id}"]`).value.trim();saveFB();renderFbi()})}
+function initAuth(){const CH=["You've got this. Small steps today, big wins tomorrow!","Every class you attend is a step forward. Keep going!","Asking for help is a strength, and we are cheering for you.","Your effort matters more than you know. Have a brilliant day!","Hello, bright minds! Today is a great day to learn something new."];$("#lcheer").textContent=CH[Math.floor(Math.random()*CH.length)];document.querySelectorAll(".logo").forEach(e=>{if(!e.innerHTML.trim())e.innerHTML=LOGO(+e.dataset.s)});
+ const demo={Student:["S1010","1234"],Faculty:["faculty","faculty123"],Counsellor:["counsellor","care123"],Admin:["admin","admin123"]};
+ $("#lroles").innerHTML=Object.keys(demo).map(k=>`<button class="chip" data-r="${k}">${k}</button>`).join("");
+ document.querySelectorAll("#lroles [data-r]").forEach(b=>b.onclick=()=>{const d=demo[b.dataset.r];$("#lu").value=d[0];$("#lp").value=d[1]});
+ const go1=()=>{const r=signIn($("#lu").value,$("#lp").value);if(!r){$("#lerr").textContent="Incorrect username or password.";return}$("#lerr").textContent="";enter(r)};
+ $("#lgo").onclick=go1;$("#lp").onkeydown=e=>{if(e.key=="Enter")go1()};
+ $("#out").onclick=()=>{try{sessionStorage.removeItem("lun")}catch(e){}location.reload()};
+ $("#lfab").innerHTML=LOGO(34)+"<span>Chat with Lunala</span>";$("#lfab").onclick=()=>POP?closePop():openPop();$("#pclose").onclick=closePop;
+ const snd=()=>{const v=$("#pin").value;$("#pin").value="";ROLE=="student"?nAsk(v):lAsk(v)};$("#psend").onclick=snd;$("#pin").onkeydown=e=>{if(e.key=="Enter")snd()};
+ try{const r=JSON.parse(sessionStorage.getItem("lun")||"null");if(r&&r.role)enter(r)}catch(e){}}
+const rd=fs=>Promise.all([...fs].map(f=>f.text().then(t=>({name:f.name,rows:parseCSV(t)}))));
+$("#drop").onclick=()=>$("#fi").click();$("#fi").onchange=e=>rd(e.target.files).then(f=>{route(f);go()});
+$("#drop").ondragover=e=>{e.preventDefault();$("#drop").classList.add("on")};$("#drop").ondragleave=()=>$("#drop").classList.remove("on");
+$("#drop").ondrop=e=>{e.preventDefault();$("#drop").classList.remove("on");rd(e.dataTransfer.files).then(f=>{route(f);go()})};
+$("#samp").onclick=()=>{const F=sample();route(Object.entries(F).map(([n,r])=>({name:n+".csv",rows:r.map(x=>Object.fromEntries(Object.entries(x).map(([k,v])=>[k,String(v)])))})));go()};
+$("#dls").onclick=()=>{const F=sample();Object.entries(F).forEach(([n,r],i)=>setTimeout(()=>dl(n+".csv",toCSV(r)),i*250))};
+$("#dl").onclick=()=>dl("student_success_results.csv",toCSV(view().map(o=>({student_id:o.student_id,name:o.nm,department:o.dept,success_score:o.score.toFixed(1),risk_band:o.band,biggest_drag:o.drag,flags:fl(o).join("; "),segment:o.seg}))));
+$("#fd").onchange=$("#fb").onchange=render;$("#alr").onchange=()=>{$("#ald").innerHTML="";renderAl()};$("#cap").onchange=renderAl;$("#dla").onclick=()=>{const cn=isCn();dl("early_alerts.csv",toCSV(AL.map(a=>({student_id:a.id,name:a.nm,level:a.lv,priority:a.sc.toFixed(0),route:a.route,status:(FU[a.id]||{}).s||"New",note:cn?((FU[a.id]||{}).n||""):"",sources:a.src.join("; "),reasons:[...new Set(a.P.map(x=>cn?x.t:x.g))].join("; ")}))))};$("#ss").onchange=stu;$("#th1").onchange=$("#th2").onchange=recalc;
+initAuth();
+</script>
+</body>
+</html>
