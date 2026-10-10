@@ -1,0 +1,5 @@
+segment,students,avg_score,avg_academic,avg_placement,pct_any_risk,action
+"At-risk, needs urgent support",135,50.43,58.41,54.0,0.9,"Faculty mentor, attendance follow-up, remedial classes."
+"High academics, low placement readiness",138,63.24,73.36,46.39,0.67,"Targeted aptitude, coding and mock-interview training."
+Steady middle,119,69.26,72.85,72.91,0.29,Light-touch nudges; encourage certifications and activities.
+Top performers,108,79.17,82.95,63.27,0.26,Mentor others; fast-track for internships and leadership roles.

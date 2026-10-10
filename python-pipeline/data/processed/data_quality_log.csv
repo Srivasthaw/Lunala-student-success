@@ -1,0 +1,11 @@
+source,issue,action,rows_affected
+lms,Duplicate student_id rows,Kept first occurrence,12
+attendance,overall_pct above 100,Capped at 100,6
+psychometrics,grit above 100,Capped at 100,5
+skills,Inconsistent case/spaces in technical_skill,Stripped and title-cased,40
+academic,Missing cgpa,Filled with column median,10
+lms,Missing assignment_completion_pct,Filled with column median,15
+engagement,Missing events,Filled with column median,20
+placement,Missing mock_interview,Filled with column median,30
+psychometrics,Missing stress_level,Filled with column median,20
+feedback,Students missing from source,Used median feedback (neutral),30
