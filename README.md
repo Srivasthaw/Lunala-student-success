@@ -73,10 +73,10 @@ Server-side authentication and audit logs, a database, a Python port of the surv
 
 | Member | Role |
 |---|---|
-| <Srivasthaw> | Designed and built the full solution: architecture, backend, frontend, wellbeing survey, early-alert scoring, Lunala agent |
-| <Shaktivel> (Team lead) | Tested the app and reported bugs |
-| <Shree Hari> | Suggested improvements |
-| <Dhanyasree> | Reviewed privacy and misuse risks |
-| <Athulyaa> | Reviewed documentation |
+| Srivasthaw | Designed and built the full solution: architecture, backend, frontend, wellbeing survey, early-alert scoring, Lunala agent |
+| Shaktivel (Team lead) | Tested the app and reported bugs |
+| Shree Hari | Suggested improvements |
+| Dhanyasree | Reviewed privacy and misuse risks |
+| Athulyaa | Reviewed documentation |
 
-College: <Marwadi University>, <Rajkot>
+College: Marwadi_University, Rajkot
