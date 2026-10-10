@@ -6,7 +6,6 @@
 
 Built for **KPMG in India, Challenge 04: Smart Campus Analytics** (Predict, Optimize and Improve Student Success).
 
-**Live demo:** `https://<your-github-username>.github.io/<repo-name>/` *(fill in after you enable GitHub Pages; see `GITHUB_STEPS.md`)*
 
 ## Demo logins
 | Role | Username | Password | What they see |
