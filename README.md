@@ -4,7 +4,6 @@
 > **Every student seen, every step celebrated.**
 > An early-support copilot for colleges. Lunala combines academics, attendance, LMS activity, wellbeing check-ins and behaviour trends into an explainable Student Success Score and early alerts, so faculty and counsellors can reach out kindly and early.
 
-Built for **KPMG in India, Challenge 04: Smart Campus Analytics** (Predict, Optimize and Improve Student Success).
 
 
 ## Demo logins
